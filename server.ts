@@ -28,6 +28,44 @@ async function startServer() {
     res.json(complaints);
   });
 
+  app.get("/api/queue-status", (req, res) => {
+    const { location } = req.query;
+    
+    // Simulate real-world data based on location type
+    const locationData: Record<string, { base: number, variance: number, serviceRate: number }> = {
+      'AIIMS Delhi': { base: 45, variance: 15, serviceRate: 12 },
+      'Safdarjung Hospital': { base: 38, variance: 12, serviceRate: 10 },
+      'Passport Seva Kendra': { base: 25, variance: 8, serviceRate: 8 },
+      'RTO Janakpuri': { base: 20, variance: 10, serviceRate: 6 },
+      'New Delhi Railway Station': { base: 50, variance: 20, serviceRate: 15 },
+      'ISBT Kashmiri Gate': { base: 40, variance: 15, serviceRate: 12 },
+      'Delhi High Court': { base: 15, variance: 5, serviceRate: 5 },
+      'Supreme Court of India': { base: 12, variance: 4, serviceRate: 4 },
+      'Delhi University (North)': { base: 10, variance: 5, serviceRate: 3 },
+      'Sarojini Nagar Market (Parking)': { base: 30, variance: 15, serviceRate: 8 },
+      'Lajpat Nagar Market (Parking)': { base: 28, variance: 12, serviceRate: 7 },
+      'Connaught Place (Palika Parking)': { base: 35, variance: 10, serviceRate: 9 },
+      'Police Headquarters': { base: 8, variance: 3, serviceRate: 4 },
+      'Delhi Jal Board': { base: 18, variance: 7, serviceRate: 5 },
+      'DTC Headquarters': { base: 14, variance: 6, serviceRate: 4 },
+      'Ambedkar University': { base: 6, variance: 3, serviceRate: 2 },
+      'JNU Campus': { base: 5, variance: 2, serviceRate: 2 },
+      'IIT Delhi': { base: 4, variance: 2, serviceRate: 2 },
+      'National Museum': { base: 12, variance: 5, serviceRate: 4 },
+    };
+
+    const data = locationData[location as string] || { base: 15, variance: 5, serviceRate: 5 };
+    const currentCount = Math.floor(data.base + (Math.random() * data.variance * 2 - data.variance));
+    
+    res.json({
+      location,
+      count: Math.max(1, currentCount),
+      waitTime: Math.max(5, Math.floor(currentCount * (20 / data.serviceRate))),
+      load: Math.min(100, Math.floor((currentCount / (data.base + data.variance)) * 100)),
+      status: currentCount > data.base + data.variance * 0.5 ? 'critical' : currentCount > data.base ? 'high' : 'normal'
+    });
+  });
+
   app.post("/api/complaints", (req, res) => {
     const newComplaint = {
       ...req.body,
@@ -40,13 +78,14 @@ async function startServer() {
 
   app.post("/api/analyze-image", async (req, res) => {
     const { image, mimeType } = req.body;
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
 
-    if (!process.env.GEMINI_API_KEY) {
+    if (!apiKey) {
       return res.status(500).json({ error: "GEMINI_API_KEY not configured" });
     }
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const ai = new GoogleGenAI({ apiKey });
       
       const prompt = `Analyze this city complaint image. Respond ONLY with a JSON object (no markdown, no extra text): 
       {
@@ -78,7 +117,12 @@ async function startServer() {
       res.json(result);
     } catch (error) {
       console.error("AI Analysis Error:", error);
-      res.status(500).json({ error: "Failed to analyze image" });
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      res.status(500).json({ 
+        error: "Failed to analyze image", 
+        details: errorMessage,
+        suggestion: "Please check your API key and network connection."
+      });
     }
   });
 

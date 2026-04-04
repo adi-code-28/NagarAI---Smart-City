@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { GoogleGenAI, Type } from "@google/genai";
 
 // --- Utilities ---
 function cn(...inputs: ClassValue[]) {
@@ -79,6 +80,24 @@ const SmartCityAnimation = () => {
         <div className="absolute top-2 left-2 w-2 h-2 bg-slate-300 rounded-full opacity-50" />
         <div className="absolute bottom-2 right-3 w-3 h-3 bg-slate-300 rounded-full opacity-50" />
       </motion.div>
+
+      {/* Data Streams */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ x: -100, y: 50 + i * 40, opacity: 0 }}
+            animate={{ x: 1200, opacity: [0, 0.5, 0] }}
+            transition={{ 
+              duration: 15 + i * 5, 
+              repeat: Infinity, 
+              delay: i * 3,
+              ease: "linear" 
+            }}
+            className="absolute h-px w-32 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
+          />
+        ))}
+      </div>
 
       {/* Clouds / Stars */}
       <div className="absolute inset-0 pointer-events-none">
@@ -299,38 +318,97 @@ const PotholeAnimation = () => {
 };
 
 const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
-  const [count, setCount] = useState(Math.floor(Math.random() * 10) + 8);
+  const [queue, setQueue] = useState<{ id: number; avatar: string }[]>([]);
+  const [waitTime, setWaitTime] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsProcessing(true);
-      setProgress(0);
-      
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(progressInterval);
-            return 100;
-          }
-          return prev + 4;
-        });
-      }, 20);
-
-      setTimeout(() => {
-        setCount((prev) => (prev <= 3 ? 12 : prev - 1));
-        setIsProcessing(false);
-        setProgress(0);
-      }, 600);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
+  const nextId = useRef(0);
+  const intervals = useRef<{ [key: string]: NodeJS.Timeout }>({});
 
   const avatars = ['👨', '👩', '🧑', '👴', '👵', '👦', '👧', '🧔', '👱‍♂️', '👱‍♀️', '👳‍♂️', '🧕', '👮‍♂️', '👷‍♀️', '👩‍⚕️', '👨‍🏫'];
 
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch(`/api/queue-status?location=${encodeURIComponent(location)}`);
+      const data = await res.json();
+      
+      const initialQueue = Array.from({ length: Math.min(data.count, 12) }).map(() => ({
+        id: nextId.current++,
+        avatar: avatars[Math.floor(Math.random() * avatars.length)]
+      }));
+      
+      setQueue(initialQueue);
+      setWaitTime(data.waitTime);
+      setIsLoading(false);
+    } catch (err) {
+      console.error("Failed to fetch queue status", err);
+      const fallbackCount = 6;
+      setQueue(Array.from({ length: fallbackCount }).map(() => ({
+        id: nextId.current++,
+        avatar: avatars[Math.floor(Math.random() * avatars.length)]
+      })));
+      setWaitTime(15);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchStatus();
+    
+    // Main simulation loop
+    intervals.current.timer = setInterval(() => {
+      if (isProcessing) return;
+      
+      setIsProcessing(true);
+      setProgress(0);
+      
+      let p = 0;
+      intervals.current.progress = setInterval(() => {
+        p += 2.5;
+        setProgress(p);
+        if (p >= 100) {
+          clearInterval(intervals.current.progress);
+          
+          // Delay before removal for visual impact
+          setTimeout(() => {
+            setQueue(current => {
+              const newQueue = [...current];
+              newQueue.shift();
+              if (newQueue.length < 4) {
+                newQueue.push({
+                  id: nextId.current++,
+                  avatar: avatars[Math.floor(Math.random() * avatars.length)]
+                });
+              }
+              return newQueue;
+            });
+            setIsProcessing(false);
+            setProgress(0);
+          }, 300);
+        }
+      }, 40);
+    }, 6000);
+
+    intervals.current.refresh = setInterval(fetchStatus, 60000);
+
+    return () => {
+      Object.values(intervals.current).forEach(clearInterval);
+    };
+  }, [location]);
+
   return (
     <div className="relative w-full h-48 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-inner">
+      {isLoading ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-50">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fetching Live Data...</span>
+          </div>
+        </div>
+      ) : null}
+      
       {/* Counter */}
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-b from-blue-600 to-blue-800 flex flex-col items-center justify-center text-white z-20 shadow-[-8px_0_20px_rgba(0,0,0,0.1)]">
         <div className="text-[10px] uppercase font-black tracking-widest mb-3 opacity-80">Service Desk</div>
@@ -349,7 +427,7 @@ const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
             />
           )}
         </div>
-        <div className="mt-4 text-[9px] font-black bg-blue-900/80 px-3 py-1 rounded-full uppercase tracking-tighter border border-blue-700">{location}</div>
+        <div className="mt-4 text-[9px] font-black bg-blue-900/80 px-3 py-1 rounded-full uppercase tracking-tighter border border-blue-700 max-w-[100px] truncate text-center">{location}</div>
         
         {isProcessing && (
           <div className="mt-4 w-24 h-2 bg-blue-950 rounded-full overflow-hidden border border-blue-800 p-0.5">
@@ -362,57 +440,74 @@ const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
       </div>
 
       {/* People in Queue */}
-      <div className="absolute inset-0 right-32 flex items-center justify-end px-8 gap-5">
+      <div className="absolute inset-0 right-32 flex flex-row-reverse items-center justify-start px-12 gap-3">
         <AnimatePresence mode="popLayout">
-          {Array.from({ length: count }).map((_, i) => (
+          {queue.slice(0, 8).map((person, i) => (
             <motion.div
-              key={i}
+              key={person.id}
               layout
-              initial={{ opacity: 0, x: -100, scale: 0.5, rotate: -10 }}
+              initial={{ opacity: 0, x: 50, scale: 0.8 }}
               animate={{ 
                 opacity: 1, 
                 x: 0, 
                 scale: 1 - (i * 0.05),
-                y: [0, -4, 0],
                 zIndex: 10 - i
               }}
               exit={{ 
                 opacity: 0, 
-                x: 150, 
+                x: 100, 
                 scale: 1.2, 
-                rotate: 20,
-                y: -50,
+                y: -10,
                 filter: 'blur(4px)'
               }}
               transition={{ 
-                layout: { duration: 0.4, ease: "circOut" },
-                y: { duration: 2.5, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }
+                duration: 0.5,
+                ease: "circOut"
               }}
               className={cn(
-                "w-14 h-20 rounded-t-3xl rounded-b-xl flex flex-col items-center justify-center text-4xl shadow-xl border-b-4 border-black/10 relative transition-all",
-                i === 0 && isProcessing ? "ring-4 ring-blue-400 ring-offset-4 scale-110 z-30" : ""
+                "w-12 h-16 rounded-t-2xl rounded-b-lg flex flex-col items-center justify-center text-3xl shadow-lg border-b-4 border-black/10 relative",
+                i === 0 && isProcessing ? "ring-4 ring-blue-400 ring-offset-2 scale-110 z-30" : ""
               )}
               style={{ 
-                backgroundColor: `hsl(${i * 35 + 200}, 75%, 90%)`,
-                transform: `translateX(${i * -4}px)`
+                backgroundColor: `hsl(${i * 20 + 210}, 70%, 85%)`,
               }}
             >
-              <span className="drop-shadow-md select-none">{avatars[i % avatars.length]}</span>
+              <span className="drop-shadow-sm select-none">{person.avatar}</span>
               {i === 0 && isProcessing && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 20, scale: 0.5 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  className="absolute -top-12 bg-blue-600 text-white px-4 py-1.5 rounded-2xl shadow-2xl border border-blue-400 text-[10px] font-black tracking-tighter whitespace-nowrap flex items-center gap-2 z-40"
-                >
-                  <div className="w-2 h-2 bg-white rounded-full animate-ping" />
-                  VERIFYING...
-                </motion.div>
+                <>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute -top-10 bg-blue-600 text-white px-3 py-1 rounded-full shadow-xl text-[8px] font-black tracking-widest whitespace-nowrap z-40"
+                  >
+                    PROCESSING
+                  </motion.div>
+                  <svg className="absolute inset-0 -m-1 w-[calc(100%+8px)] h-[calc(100%+8px)] pointer-events-none rotate-[-90deg]">
+                    <motion.circle
+                      cx="50%"
+                      cy="50%"
+                      r="48%"
+                      fill="none"
+                      stroke="#34d399"
+                      strokeWidth="3"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: progress / 100 }}
+                      className="drop-shadow-[0_0_5px_#34d399]"
+                    />
+                  </svg>
+                </>
               )}
-              {/* Shadow */}
-              <div className="absolute -bottom-3 w-10 h-1.5 bg-black/5 rounded-full blur-[2px]" />
             </motion.div>
           ))}
         </AnimatePresence>
+        {queue.length > 10 && (
+          <div className="absolute left-8 top-1/2 -translate-y-1/2 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 border-2 border-white shadow-sm">
+              +{queue.length - 10}
+            </div>
+            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">More in line</span>
+          </div>
+        )}
       </div>
 
       {/* Live Stats Overlay */}
@@ -420,12 +515,12 @@ const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
         <div className="flex flex-col">
           <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest mb-1">Live Queue</span>
           <motion.div 
-            key={count}
+            key={`${location}-${queue.length}`}
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="flex items-baseline gap-1"
           >
-            <span className="text-3xl font-black text-slate-900">{count}</span>
+            <span className="text-3xl font-black text-slate-900">{queue.length}</span>
             <span className="text-[10px] font-bold text-slate-400">PEOPLE</span>
           </motion.div>
         </div>
@@ -434,9 +529,9 @@ const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
           <div className="flex items-baseline gap-1">
             <span className={cn(
               "text-3xl font-black transition-colors",
-              count > 10 ? "text-red-500" : count > 5 ? "text-amber-500" : "text-emerald-500"
+              queue.length > 30 ? "text-red-500" : queue.length > 15 ? "text-amber-500" : "text-emerald-500"
             )}>
-              {count * 2}
+              {waitTime}
             </span>
             <span className="text-[10px] font-bold text-slate-400">MINS</span>
           </div>
@@ -446,55 +541,159 @@ const QueueAnimation = ({ location = 'General' }: { location?: string }) => {
   );
 };
 
-const RouteAnimation = () => {
+const RouteAnimation = ({ origin, destination, mode = 'metro' }: { origin: string, destination: string, mode?: string }) => {
+  const pathData = "M 100 100 C 300 20, 700 180, 900 100";
+  
+  const getVehicle = (m: string) => {
+    const lower = m.toLowerCase();
+    if (lower.includes('metro')) return '🚇';
+    if (lower.includes('bus')) return '🚌';
+    if (lower.includes('taxi') || lower.includes('auto')) return '🚕';
+    return '🚗';
+  };
+
   return (
-    <div className="relative w-full h-40 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
-      {/* Map Background (Abstract) */}
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,#334155_1px,transparent_1px)] bg-[size:20px_20px]" />
+    <div className="relative w-full h-64 bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl group">
+      {/* Map Grid */}
+      <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px]" />
       
-      {/* Route Path */}
-      <svg className="absolute inset-0 w-full h-full">
-        <motion.path
-          d="M 50 80 Q 150 20 250 80 T 450 80"
-          fill="none"
-          stroke="#3b82f6"
-          strokeWidth="4"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
-          className="drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
-        />
-        <path
-          d="M 50 80 Q 150 20 250 80 T 450 80"
-          fill="none"
-          stroke="#1e293b"
-          strokeWidth="4"
-          strokeLinecap="round"
-          className="opacity-50"
-        />
-      </svg>
+      {/* City Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
+        {[...Array(10)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute bg-slate-700 rounded-sm"
+            style={{
+              width: Math.random() * 60 + 20,
+              height: Math.random() * 60 + 20,
+              left: Math.random() * 100 + '%',
+              top: Math.random() * 100 + '%',
+              transform: `rotate(${Math.random() * 45}deg)`
+            }}
+          />
+        ))}
+      </div>
 
-      {/* Vehicle */}
-      <motion.div
-        animate={{ 
-          offsetDistance: ['0%', '100%'],
-        }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        style={{ offsetPath: "path('M 50 80 Q 150 20 250 80 T 450 80')" }}
-        className="absolute text-2xl"
-      >
-        🚇
-      </motion.div>
+      <div className="absolute inset-0">
+        <svg className="w-full h-full" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#3b82f6" />
+              <stop offset="50%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#3b82f6" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-      {/* Nodes */}
-      <div className="absolute left-[40px] top-[70px] w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-lg" />
-      <div className="absolute left-[440px] top-[70px] w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow-lg" />
+          {/* Background Path (Solid) */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke="#1e293b"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="opacity-30"
+          />
+          
+          {/* Animated Progress Path */}
+          <motion.path
+            d={pathData}
+            fill="none"
+            stroke="url(#routeGradient)"
+            strokeWidth="6"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: [0, 1, 1] }}
+            transition={{ 
+              duration: 6, 
+              times: [0, 0.7, 1],
+              repeat: Infinity, 
+              ease: "easeInOut"
+            }}
+            filter="url(#glow)"
+          />
 
-      <div className="absolute bottom-3 left-4 right-4 flex justify-between items-center text-[10px] font-mono text-slate-400">
-        <span>ORIGIN: DWARKA</span>
-        <div className="h-px flex-1 mx-4 bg-slate-800" />
-        <span>DEST: CP</span>
+          {/* Start & End Markers */}
+          <g transform="translate(100, 100)">
+            <circle r="12" fill="#10b981" fillOpacity="0.2" className="animate-ping" />
+            <circle r="6" fill="#10b981" className="shadow-lg shadow-emerald-500/50" />
+            <text y="-25" textAnchor="middle" className="text-[10px] font-black fill-emerald-500 uppercase tracking-widest">Origin</text>
+          </g>
+          
+          <g transform="translate(900, 100)">
+            <motion.circle 
+              r="20" 
+              fill="#ef4444" 
+              fillOpacity="0.1" 
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <circle r="8" fill="#ef4444" className="shadow-lg shadow-red-500/50" />
+            <text y="-25" textAnchor="middle" className="text-[10px] font-black fill-red-500 uppercase tracking-widest">Destination</text>
+          </g>
+
+          {/* Vehicle Group */}
+          <motion.g
+            initial={{ offsetDistance: "0%" }}
+            animate={{ offsetDistance: ["0%", "100%", "100%"] }}
+            transition={{ 
+              duration: 6, 
+              times: [0, 0.7, 1],
+              repeat: Infinity, 
+              ease: "easeInOut"
+            }}
+            style={{ 
+              offsetPath: `path('${pathData}')`,
+              WebkitOffsetPath: `path('${pathData}')`,
+            }}
+          >
+            {/* Vehicle Icon */}
+            <text 
+              x="0" 
+              y="0" 
+              fontSize="36" 
+              className="drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" 
+              style={{ 
+                dominantBaseline: 'middle', 
+                textAnchor: 'middle',
+              }}
+            >
+              {getVehicle(mode)}
+            </text>
+            
+            {/* Pulsing Aura */}
+            <motion.circle 
+              r="24" 
+              fill="#3b82f6" 
+              fillOpacity="0.2" 
+              animate={{ scale: [1, 1.4, 1], opacity: [0.4, 0.8, 0.4] }} 
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </motion.g>
+        </svg>
+      </div>
+
+      {/* Overlays */}
+      <div className="absolute top-4 left-6 flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm px-3 py-1 rounded-full border border-slate-800">
+        <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+        <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">Live Optimization</span>
+      </div>
+
+      <div className="absolute bottom-4 left-6 right-6 flex justify-between items-end pointer-events-none">
+        <div className="flex flex-col">
+          <span className="text-[8px] font-black text-slate-500 uppercase tracking-tighter mb-1">From</span>
+          <span className="text-xs font-bold text-slate-200 truncate max-w-[150px]">{origin}</span>
+        </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[8px] font-black text-slate-500 uppercase tracking-tighter mb-1">To</span>
+          <span className="text-xs font-bold text-slate-200 truncate max-w-[150px]">{destination}</span>
+        </div>
       </div>
     </div>
   );
@@ -510,12 +709,101 @@ export default function App() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
   const [queueLocation, setQueueLocation] = useState('AIIMS Delhi');
+  const [venueStatuses, setVenueStatuses] = useState<any[]>([]);
+  const [selectedRouteIndex, setSelectedRouteIndex] = useState<number | null>(null);
   const [routeData, setRouteData] = useState({
     origin: 'Dwarka Sector 12',
     destination: 'Connaught Place',
     isCalculating: false,
     results: null as any[] | null
   });
+
+  const calculateRoute = async () => {
+    setSelectedRouteIndex(null);
+    // Check for API key selection if missing in env
+    let apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    const hasKey = apiKey || ((window as any).aistudio && await (window as any).aistudio.hasSelectedApiKey());
+    
+    if (!hasKey) {
+      console.error("GEMINI_API_KEY is missing");
+      if ((window as any).aistudio) {
+        await (window as any).aistudio.openSelectKey();
+      }
+      
+      // Fallback immediately if key is missing
+      setRouteData(prev => ({ ...prev, isCalculating: false, results: [
+        { mode: 'Metro', time: '45 min', cost: '₹40', crowd: 'High', co2: '0.2 kg', efficiency: 92, details: 'Blue Line to Rajiv Chowk', best: true },
+        { mode: 'Taxi', time: '65 min', cost: '₹450', crowd: 'Low', co2: '4.5 kg', efficiency: 65, details: 'Via NH-48', best: false },
+        { mode: 'Bus', time: '90 min', cost: '₹25', crowd: 'Medium', co2: '1.2 kg', efficiency: 78, details: 'Route 727', best: false }
+      ]}));
+      return;
+    }
+
+    setRouteData(prev => ({ ...prev, isCalculating: true }));
+    try {
+      // Re-read key to ensure we have the one from the dialog if it was just selected
+      const currentKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+      if (!currentKey) {
+        throw new Error("API key not found after selection");
+      }
+      
+      const ai = new GoogleGenAI({ apiKey: currentKey });
+      const prompt = `Provide 3 real-world transport route options between ${routeData.origin} and ${routeData.destination} in Delhi. 
+      Include Metro, Bus, and Taxi/Auto options.
+      Respond ONLY with a JSON array of objects:
+      [{
+        "mode": "metro|bus|taxi",
+        "time": "estimated time in mins",
+        "cost": "estimated cost in INR",
+        "crowd": "low|medium|high",
+        "co2": "estimated carbon footprint in kg",
+        "efficiency": 0-100,
+        "details": "brief description of the route",
+        "best": boolean
+      }]`;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: prompt,
+        config: {
+          tools: [{ googleMaps: {} }], 
+          toolConfig: {
+            retrievalConfig: {
+              latLng: {
+                latitude: 28.6139,
+                longitude: 77.2090
+              }
+            }
+          }
+        }
+      });
+
+      // Extract JSON from response text (it might be wrapped in markdown)
+      const text = response.text || "[]";
+      const jsonMatch = text.match(/\[[\s\S]*\]/);
+      const results = JSON.parse(jsonMatch ? jsonMatch[0] : (text.includes('[') ? text : "[]"));
+      setRouteData(prev => ({ ...prev, results, isCalculating: false }));
+    } catch (err) {
+      console.error("Route calculation failed", err);
+      // If it's an API key error, prompt again
+      if (err instanceof Error && err.message.includes("API key") && (window as any).aistudio) {
+        await (window as any).aistudio.openSelectKey();
+      }
+      
+      // Fallback to simulation if AI fails
+      setRouteData(prev => ({ ...prev, isCalculating: false, results: [
+        { mode: 'Metro', time: '45 min', cost: '₹40', crowd: 'High', co2: '0.2 kg', efficiency: 92, details: 'Blue Line to Rajiv Chowk', best: true },
+        { mode: 'Taxi', time: '65 min', cost: '₹450', crowd: 'Low', co2: '4.5 kg', efficiency: 65, details: 'Via NH-48', best: false },
+        { mode: 'Bus', time: '90 min', cost: '₹25', crowd: 'Medium', co2: '1.2 kg', efficiency: 78, details: 'Route 727', best: false }
+      ]}));
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'transport' && !routeData.results) {
+      calculateRoute();
+    }
+  }, [activeTab]);
   const [formData, setFormData] = useState({
     title: '',
     location: '',
@@ -525,7 +813,29 @@ export default function App() {
 
   useEffect(() => {
     fetchComplaints();
+    fetchVenueStatuses();
   }, []);
+
+  const fetchVenueStatuses = async () => {
+    const venues = [
+      'AIIMS Delhi',
+      'Passport Seva Kendra',
+      'MCD Civic Centre',
+      'Safdarjung Hospital',
+      'Max Super Speciality',
+      'Delhi University (North)'
+    ];
+    
+    try {
+      const results = await Promise.all(venues.map(async (v) => {
+        const res = await fetch(`/api/queue-status?location=${encodeURIComponent(v)}`);
+        return await res.json();
+      }));
+      setVenueStatuses(results);
+    } catch (err) {
+      console.error("Failed to fetch venue statuses", err);
+    }
+  };
 
   const fetchComplaints = async () => {
     try {
@@ -608,18 +918,6 @@ export default function App() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const calculateRoute = () => {
-    setRouteData(prev => ({ ...prev, isCalculating: true }));
-    setTimeout(() => {
-      const mockRoutes = [
-        { mode: 'Metro (Blue Line)', time: '28 min', cost: '₹40', crowd: '42%', co2: '41g', best: true },
-        { mode: 'DTC Bus (727)', time: '55 min', cost: '₹15', crowd: '68%', co2: '89g', best: false },
-        { mode: 'Auto Rickshaw', time: '42 min', cost: '₹180', crowd: '10%', co2: '158g', best: false },
-      ];
-      setRouteData(prev => ({ ...prev, isCalculating: false, results: mockRoutes }));
-    }, 1500);
   };
 
   const stats = [
@@ -727,7 +1025,7 @@ export default function App() {
               {/* Module Previews */}
               <section className="grid md:grid-cols-3 gap-6">
                 {[
-                  { title: 'Civic Complaints', desc: 'Photo-to-resolution in seconds using Claude Vision.', icon: Camera, color: 'text-red-500', tab: 'complaints' as Tab },
+                  { title: 'Civic Complaints', desc: 'Photo-to-resolution in seconds using AI Vision.', icon: Camera, color: 'text-red-500', tab: 'complaints' as Tab },
                   { title: 'Queue Prediction', desc: 'Live wait times for hospitals and govt offices.', icon: Clock, color: 'text-emerald-500', tab: 'queue' as Tab },
                   { title: 'Route Optimizer', desc: 'Multi-modal transport scoring for Delhi journeys.', icon: Navigation, color: 'text-blue-500', tab: 'transport' as Tab },
                 ].map((module, i) => (
@@ -815,7 +1113,7 @@ export default function App() {
                     ) : (
                       <>
                         <Zap size={20} />
-                        <span>ANALYZE WITH CLAUDE VISION</span>
+                        <span>ANALYZE WITH AI VISION</span>
                       </>
                     )}
                   </button>
@@ -1113,21 +1411,21 @@ export default function App() {
                 <div className="space-y-4">
                   <h3 className="font-display font-bold text-slate-900">Public Service Status</h3>
                   <div className="space-y-3">
-                    {[
-                      { name: 'AIIMS Delhi', wait: '180 min', status: 'critical', load: 92 },
-                      { name: 'Passport Seva Kendra', wait: '45 min', status: 'normal', load: 45 },
-                      { name: 'MCD Civic Centre', wait: '15 min', status: 'low', load: 12 },
-                      { name: 'Safdarjung Hospital', wait: '120 min', status: 'high', load: 78 },
-                      { name: 'Max Super Speciality', wait: '90 min', status: 'high', load: 65 },
-                      { name: 'Delhi University', wait: '10 min', status: 'low', load: 8 },
-                    ].map((venue, i) => (
+                    {(venueStatuses.length > 0 ? venueStatuses : [
+                      { location: 'AIIMS Delhi', waitTime: 180, status: 'critical', load: 92 },
+                      { location: 'Passport Seva Kendra', waitTime: 45, status: 'normal', load: 45 },
+                      { location: 'MCD Civic Centre', waitTime: 15, status: 'low', load: 12 },
+                      { location: 'Safdarjung Hospital', waitTime: 120, status: 'high', load: 78 },
+                      { location: 'Max Super Speciality', waitTime: 90, status: 'high', load: 65 },
+                      { location: 'Delhi University (North)', waitTime: 10, status: 'low', load: 8 },
+                    ]).map((venue, i) => (
                       <div key={i} className="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-blue-200 transition-all">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-blue-500 transition-colors">
                             <Building2 size={20} />
                           </div>
                           <div>
-                            <h5 className="text-sm font-bold text-slate-900">{venue.name}</h5>
+                            <h5 className="text-sm font-bold text-slate-900">{venue.location || venue.name}</h5>
                             <div className="flex items-center gap-2">
                               <div className="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                                 <div 
@@ -1147,7 +1445,7 @@ export default function App() {
                             "text-sm font-bold",
                             venue.status === 'critical' ? "text-red-500" : venue.status === 'high' ? "text-amber-500" : "text-emerald-500"
                           )}>
-                            {venue.wait}
+                            {venue.waitTime || venue.wait} min
                           </div>
                           <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Wait Time</div>
                         </div>
@@ -1173,7 +1471,11 @@ export default function App() {
                     <h2 className="font-display text-3xl font-bold text-slate-900">Transport Optimizer</h2>
                     <p className="text-slate-600">Multi-modal route scoring considering time, crowd density, cost, and carbon footprint.</p>
                   </div>
-                  <RouteAnimation />
+                  <RouteAnimation 
+                    origin={routeData.origin} 
+                    destination={routeData.destination} 
+                    mode={selectedRouteIndex !== null && routeData.results ? routeData.results[selectedRouteIndex].mode : 'metro'} 
+                  />
                   
                   <div className="glass-card p-6 rounded-2xl grid md:grid-cols-3 gap-4">
                     <div className="space-y-1">
@@ -1271,19 +1573,29 @@ export default function App() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.1 }}
+                        onClick={() => setSelectedRouteIndex(i)}
                         className={cn(
-                          "glass-card p-4 rounded-xl space-y-3 border-2 transition-all",
-                          route.best ? "border-blue-500 bg-blue-50/30" : "border-transparent"
+                          "glass-card p-4 rounded-xl space-y-3 border-2 transition-all cursor-pointer",
+                          selectedRouteIndex === i ? "border-blue-500 bg-blue-50/30 shadow-lg shadow-blue-100" : 
+                          route.best && selectedRouteIndex === null ? "border-blue-500/50 bg-blue-50/10" : "border-transparent hover:border-slate-200"
                         )}
                       >
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-2">
-                            <Bus size={16} className={route.best ? "text-blue-600" : "text-slate-400"} />
+                            <div className={cn(
+                              "p-1.5 rounded-lg",
+                              route.best ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"
+                            )}>
+                              {route.mode.toLowerCase().includes('metro') ? <TrendingUp size={14} /> : route.mode.toLowerCase().includes('bus') ? <Bus size={14} /> : <Navigation size={14} />}
+                            </div>
                             <span className="text-sm font-bold text-slate-900">{route.mode}</span>
                           </div>
                           {route.best && <span className="bg-blue-600 text-white text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Best Pick</span>}
                         </div>
-                        <div className="grid grid-cols-4 gap-2 text-center">
+                        
+                        <p className="text-[10px] text-slate-500 leading-tight italic">{route.details}</p>
+
+                        <div className="grid grid-cols-4 gap-2 text-center pt-2 border-t border-slate-100">
                           <div>
                             <div className="text-xs font-bold text-slate-900">{route.time}</div>
                             <div className="text-[8px] text-slate-500 uppercase font-bold">Time</div>
