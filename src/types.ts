@@ -1,4 +1,4 @@
-export type Tab = 'overview' | 'complaints' | 'queue' | 'transport' | 'agriculture' | 'skills' | 'events' | 'profile' | 'about';
+export type Tab = 'overview' | 'complaints' | 'transport' | 'agriculture' | 'skills' | 'events' | 'profile' | 'about';
 
 export interface CityEvent {
   id: string;
@@ -43,6 +43,7 @@ export interface Lecture {
   videoUrl: string;
   duration: string;
   order: number;
+  content?: string;
 }
 
 export interface UserProgress {
@@ -61,7 +62,7 @@ export interface TrackingAction {
 export interface Complaint {
   id: string;
   title: string;
-  category: 'road' | 'garbage' | 'electricity' | 'water' | 'other';
+  category: 'road' | 'garbage' | 'electricity' | 'water' | 'infrastructure' | 'other';
   location: string;
   status: 'open' | 'in_progress' | 'resolved';
   priority: 'low' | 'medium' | 'high' | 'critical';

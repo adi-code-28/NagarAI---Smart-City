@@ -5,28 +5,28 @@ export const CATEGORIES: Category[] = [
     id: 'jee',
     title: 'JEE Preparation',
     description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.',
-    thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/jee_cat/800/600',
     icon: 'GraduationCap'
   },
   {
     id: 'neet',
     title: 'NEET Preparation',
     description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.',
-    thumbnail: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/neet_cat/800/600',
     icon: 'Activity'
   },
   {
     id: 'class10',
     title: 'Class 10 Boards',
     description: 'Complete syllabus coverage for Class 10 Board exams.',
-    thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/class10_cat/800/600',
     icon: 'BookOpen'
   },
   {
     id: 'skills',
     title: 'Skill Development',
     description: 'Learn Coding, AI, Communication, and more for the future.',
-    thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/skills_cat/800/600',
     icon: 'Zap'
   }
 ];
@@ -37,7 +37,7 @@ export const COURSES: Course[] = [
     categoryId: 'jee',
     title: 'Physics: Mechanics Masterclass',
     description: 'Deep dive into Kinematics, Laws of Motion, and Work Power Energy.',
-    thumbnail: 'https://images.unsplash.com/photo-1636466484202-cae263f05812?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/mechanics/800/600',
     instructor: 'Dr. Amit Sharma',
     level: 'Advanced',
     duration: '24 Hours',
@@ -52,7 +52,7 @@ export const COURSES: Course[] = [
     categoryId: 'skills',
     title: 'Full Stack Web Development',
     description: 'Learn React, Node.js, and MongoDB from scratch.',
-    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/webdev_fallback/800/600',
     instructor: 'Sandeep Singh',
     level: 'Beginner',
     duration: '40 Hours',
@@ -66,7 +66,7 @@ export const COURSES: Course[] = [
     categoryId: 'skills',
     title: 'AI & Machine Learning',
     description: 'Understand the basics of AI and build your first ML model.',
-    thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+    thumbnail: 'https://picsum.photos/seed/ai_fallback/800/600',
     instructor: 'Priya Verma',
     level: 'Intermediate',
     duration: '30 Hours',

@@ -33,8 +33,8 @@ export const SkillPortal = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [showRequirements, setShowRequirements] = React.useState(false);
-
   const [selectedLevel, setSelectedLevel] = React.useState<string | null>(null);
+  const [activeTab, setActiveTab] = React.useState<'video' | 'notes'>('video');
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -125,91 +125,158 @@ export const SkillPortal = () => {
     const currentProgress = getCourseProgress(selectedCourse.id);
     
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <button 
           onClick={() => { setSelectedCourse(null); setActiveLecture(null); }}
-          className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium"
+          className="group flex items-center gap-3 text-slate-500 hover:text-slate-900 transition-all text-xs font-black uppercase tracking-[0.2em]"
         >
-          <ArrowRight className="rotate-180" size={16} />
+          <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:bg-slate-50 transition-colors">
+            <ArrowRight className="rotate-180" size={14} />
+          </div>
           Back to Courses
         </button>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Video Player Section */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 relative group">
-              {activeLecture ? (
-                <iframe
-                  src={activeLecture.videoUrl}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center text-white space-y-4">
-                  <div className="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center animate-pulse">
-                    <Play size={40} className="text-blue-500 fill-blue-500" />
+        <div className="grid lg:grid-cols-3 gap-10">
+          {/* Content Section */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100 flex flex-col">
+              {/* Tab Switcher */}
+              <div className="flex border-b border-slate-100 p-3 gap-3 bg-slate-50/50">
+                <button 
+                  onClick={() => setActiveTab('video')}
+                  className={cn(
+                    "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3",
+                    activeTab === 'video' ? "bg-white text-blue-600 shadow-sm border border-slate-200/50" : "text-slate-500 hover:bg-white/50"
+                  )}
+                >
+                  <Play size={14} className={activeTab === 'video' ? "fill-blue-600" : ""} />
+                  Video Lecture
+                </button>
+                <button 
+                  onClick={() => setActiveTab('notes')}
+                  className={cn(
+                    "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3",
+                    activeTab === 'notes' ? "bg-white text-blue-600 shadow-sm border border-slate-200/50" : "text-slate-500 hover:bg-white/50"
+                  )}
+                >
+                  <BookOpen size={14} />
+                  Study Notes
+                </button>
+              </div>
+
+              <div className="aspect-video bg-slate-950 relative group">
+                {activeTab === 'video' ? (
+                  activeLecture ? (
+                    <iframe
+                      src={activeLecture.videoUrl}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-white space-y-6">
+                      <div className="w-24 h-24 bg-blue-600/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 animate-pulse">
+                        <Play size={48} className="text-blue-500 fill-blue-500" />
+                      </div>
+                      <div className="text-center space-y-2">
+                        <p className="font-black text-xl tracking-tight">Ready to start?</p>
+                        <p className="text-sm text-slate-500 font-medium">Select a lecture from the list to begin</p>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div className="w-full h-full bg-white overflow-y-auto p-12 custom-scrollbar">
+                    {activeLecture?.content ? (
+                      <div className="prose prose-slate max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:leading-relaxed prose-p:text-slate-600">
+                        <div dangerouslySetInnerHTML={{ __html: activeLecture.content }} />
+                      </div>
+                    ) : (
+                      <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-6">
+                        <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center">
+                          <BookOpen size={40} className="opacity-20" />
+                        </div>
+                        <p className="font-black text-lg tracking-tight">No notes available yet.</p>
+                      </div>
+                    )}
                   </div>
-                  <p className="font-medium text-slate-400">Select a lecture to start learning</p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-2xl font-display font-bold text-slate-900">{activeLecture?.title || selectedCourse.title}</h2>
-                  <p className="text-slate-500 mt-1">Instructor: {selectedCourse.instructor}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="text-right">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Course Progress</p>
-                    <p className="text-lg font-display font-bold text-blue-600">{currentProgress}%</p>
+            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40 space-y-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 blur-3xl opacity-50" />
+              
+              <div className="relative flex flex-col md:flex-row justify-between items-start gap-6">
+                <div className="space-y-3">
+                  <div className="label-caps !text-blue-600">Now Learning</div>
+                  <h2 className="text-4xl font-display font-black text-slate-900 tracking-tighter leading-none">
+                    {activeLecture?.title || selectedCourse.title}
+                  </h2>
+                  <div className="flex items-center gap-3 text-slate-500">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                      <Users size={14} />
+                    </div>
+                    <span className="text-sm font-bold tracking-tight">Instructor: {selectedCourse.instructor}</span>
                   </div>
-                  <div className="w-12 h-12 rounded-full border-4 border-slate-100 flex items-center justify-center relative">
-                    <svg className="w-full h-full -rotate-90">
+                </div>
+                <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border border-slate-100">
+                  <div className="text-right">
+                    <p className="label-caps !text-[8px] !text-slate-400">Course Mastery</p>
+                    <p className="text-2xl font-black text-blue-600 tracking-tighter">{currentProgress}%</p>
+                  </div>
+                  <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center relative border border-slate-100">
+                    <svg className="w-full h-full -rotate-90 p-1">
                       <circle
-                        cx="24"
-                        cy="24"
-                        r="20"
+                        cx="28"
+                        cy="28"
+                        r="24"
+                        fill="transparent"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        className="text-slate-100"
+                      />
+                      <circle
+                        cx="28"
+                        cy="28"
+                        r="24"
                         fill="transparent"
                         stroke="currentColor"
                         strokeWidth="4"
                         className="text-blue-600"
-                        strokeDasharray={125.6}
-                        strokeDashoffset={125.6 - (125.6 * currentProgress) / 100}
+                        strokeDasharray={150.8}
+                        strokeDashoffset={150.8 - (150.8 * currentProgress) / 100}
+                        strokeLinecap="round"
                       />
                     </svg>
                   </div>
                 </div>
               </div>
-              <p className="text-slate-600 leading-relaxed">{selectedCourse.description}</p>
+              <p className="text-slate-600 leading-relaxed text-lg font-medium max-w-3xl">
+                {selectedCourse.description}
+              </p>
             </div>
           </div>
 
           {/* Playlist Section */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-                <h3 className="font-bold text-slate-900 flex items-center gap-2">
-                  <BarChart3 size={18} className="text-blue-600" />
+          <div className="space-y-8">
+            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden flex flex-col max-h-[800px]">
+              <div className="p-8 border-b border-slate-100 bg-slate-50/50">
+                <h3 className="font-black text-slate-900 flex items-center gap-3 uppercase tracking-tight">
+                  <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                    <BarChart3 size={16} />
+                  </div>
                   Course Content
                 </h3>
               </div>
-              <div className="divide-y divide-slate-100 max-h-[600px] overflow-y-auto">
+              <div className="divide-y divide-slate-50 overflow-y-auto custom-scrollbar flex-1">
                 {selectedCourse.lectures.map((lecture, i) => (
                   <div
                     key={lecture.id}
                     onClick={() => setActiveLecture(lecture)}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        setActiveLecture(lecture);
-                      }
-                    }}
                     className={cn(
-                      "w-full p-4 flex items-start gap-4 transition-all text-left hover:bg-slate-50 cursor-pointer",
+                      "w-full p-6 flex items-start gap-5 transition-all text-left hover:bg-slate-50 cursor-pointer group",
                       activeLecture?.id === lecture.id ? "bg-blue-50/50" : ""
                     )}
                   >
@@ -220,28 +287,34 @@ export const SkillPortal = () => {
                           toggleLectureCompletion(lecture.id, selectedCourse.id);
                         }}
                         className={cn(
-                          "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                          "w-7 h-7 rounded-xl border-2 flex items-center justify-center transition-all shadow-sm",
                           isLectureCompleted(lecture.id, selectedCourse.id)
                             ? "bg-emerald-500 border-emerald-500 text-white"
-                            : "border-slate-200 text-transparent hover:border-emerald-500"
+                            : "bg-white border-slate-200 text-transparent hover:border-emerald-500"
                         )}
                       >
-                        <CheckCircle size={14} />
+                        <CheckCircle size={16} />
                       </button>
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex justify-between items-start gap-2">
+                    <div className="flex-1 space-y-2">
+                      <div className="flex justify-between items-start gap-3">
                         <span className={cn(
-                          "text-sm font-medium leading-tight",
+                          "text-sm font-black leading-tight tracking-tight",
                           activeLecture?.id === lecture.id ? "text-blue-600" : "text-slate-700"
                         )}>
-                          {i + 1}. {lecture.title}
+                          {String(i + 1).padStart(2, '0')}. {lecture.title}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap">{lecture.duration}</span>
+                        <span className="text-[10px] font-black text-slate-400 whitespace-nowrap bg-slate-100 px-2 py-0.5 rounded-md">
+                          {lecture.duration}
+                        </span>
                       </div>
                       {activeLecture?.id === lecture.id && (
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-blue-500 uppercase tracking-wider">
-                          <Play size={10} className="fill-blue-500" />
+                        <div className="flex items-center gap-2 text-[9px] font-black text-blue-600 uppercase tracking-[0.2em]">
+                          <div className="flex gap-0.5">
+                            <div className="w-1 h-3 bg-blue-600 rounded-full animate-[bounce_1s_infinite_0.1s]" />
+                            <div className="w-1 h-3 bg-blue-600 rounded-full animate-[bounce_1s_infinite_0.2s]" />
+                            <div className="w-1 h-3 bg-blue-600 rounded-full animate-[bounce_1s_infinite_0.3s]" />
+                          </div>
                           Now Playing
                         </div>
                       )}
@@ -251,17 +324,19 @@ export const SkillPortal = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 rounded-3xl text-white space-y-4 shadow-lg shadow-blue-200">
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <Award size={20} />
+            <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-8 rounded-[2.5rem] text-white space-y-6 shadow-2xl shadow-blue-200 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-150 transition-transform duration-700" />
+              
+              <div className="w-14 h-14 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/20">
+                <Award size={28} />
               </div>
-              <div>
-                <h4 className="font-bold">Earn a Certificate</h4>
-                <p className="text-xs text-blue-100 mt-1">Complete all lectures and pass the final assessment to receive your verified certificate.</p>
+              <div className="space-y-2">
+                <h4 className="text-xl font-black tracking-tight">Earn Certification</h4>
+                <p className="text-sm text-blue-100/80 leading-relaxed">Complete all lectures and pass the final assessment to receive your verified certificate.</p>
               </div>
               <button 
                 onClick={() => setShowRequirements(true)}
-                className="w-full py-2.5 bg-white text-blue-700 rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors"
+                className="w-full py-4 bg-white text-blue-700 rounded-2xl text-xs font-black uppercase tracking-[0.2em] hover:bg-blue-50 transition-all shadow-xl"
               >
                 View Requirements
               </button>
@@ -328,32 +403,44 @@ export const SkillPortal = () => {
     <div className="space-y-8">
       {/* Featured Banner */}
       {!selectedCategory && !searchQuery && (
-        <div className="relative h-64 md:h-80 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-100 group">
+        <div className="relative h-80 md:h-[450px] rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-100 group">
           <img 
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200" 
+            src="https://picsum.photos/seed/learning_path/1200/800" 
             alt="Featured"
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/40 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 space-y-4">
-            <div className="inline-flex items-center gap-2 bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
-              <Zap size={12} />
-              <span>Featured Course</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/60 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center p-12 md:p-20 space-y-6">
+            <div className="inline-flex items-center gap-3 bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl border border-blue-500">
+              <Zap size={14} className="fill-white" />
+              <span>Featured Path</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white max-w-lg leading-tight">
-              Master the Future of <span className="text-blue-400">Technology</span>
+            <h2 className="text-4xl md:text-7xl font-display font-black text-white max-w-2xl leading-[0.85] tracking-tighter">
+              Master the <br/>
+              <span className="text-blue-400">Future</span> of Tech.
             </h2>
-            <p className="text-slate-300 text-sm md:text-base max-w-md">
+            <p className="text-slate-300 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
               Join over 10,000+ students learning high-demand skills like AI, Web Development, and Data Science.
             </p>
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-6 pt-4">
               <button 
                 onClick={() => setSelectedCategory('skills')}
-                className="bg-white text-slate-900 px-6 py-3 rounded-2xl font-bold text-sm hover:bg-blue-50 transition-all flex items-center gap-2"
+                className="bg-white text-slate-900 px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-blue-600 hover:text-white transition-all flex items-center gap-3 shadow-2xl shadow-black/20"
               >
                 Explore Skills
-                <ArrowRight size={16} />
+                <ArrowRight size={18} />
               </button>
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 overflow-hidden bg-slate-800">
+                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i * 123}`} alt="User" referrerPolicy="no-referrer" />
+                  </div>
+                ))}
+                <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-black text-white">
+                  +2k
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -361,45 +448,49 @@ export const SkillPortal = () => {
 
       {/* Category Header Image (When category is selected) */}
       {selectedCategory && !searchQuery && (
-        <div className="relative h-48 rounded-[2rem] overflow-hidden shadow-lg">
+        <div className="relative h-80 rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200 group">
           <img 
             src={categories.find(c => c.id === selectedCategory)?.thumbnail} 
             alt="Category Header"
-            className="absolute inset-0 w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/20 flex items-center p-8">
-            <div className="space-y-2">
-              <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white">
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/40 to-transparent flex items-center p-16">
+            <div className="space-y-6">
+              <div className="w-16 h-16 bg-white/10 backdrop-blur-2xl rounded-2xl flex items-center justify-center text-white border border-white/20 shadow-2xl">
                 {getIcon(categories.find(c => c.id === selectedCategory)?.icon || '')}
               </div>
-              <h2 className="text-3xl font-display font-bold text-white">
-                {categories.find(c => c.id === selectedCategory)?.title}
-              </h2>
-              <p className="text-slate-300 text-sm max-w-md">
-                {categories.find(c => c.id === selectedCategory)?.description}
-              </p>
+              <div className="space-y-3">
+                <div className="label-caps !text-blue-400">Learning Path</div>
+                <h2 className="text-6xl font-display font-black text-white tracking-tighter leading-none">
+                  {categories.find(c => c.id === selectedCategory)?.title}
+                </h2>
+                <p className="text-slate-300 text-lg max-w-lg leading-relaxed font-medium">
+                  {categories.find(c => c.id === selectedCategory)?.description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       )}
 
       {/* Search & Filter Header */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="relative w-full md:w-96">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+      <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+        <div className="relative w-full lg:w-[450px]">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
           <input 
             type="text"
             placeholder="Search courses, skills, or exams..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            className="w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all shadow-sm font-medium"
           />
         </div>
-        <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-2xl border border-slate-200 overflow-x-auto no-scrollbar w-full md:w-auto">
+        <div className="flex items-center gap-2 bg-slate-100/80 backdrop-blur-sm p-1.5 rounded-[2rem] border border-slate-200/50 overflow-x-auto no-scrollbar w-full lg:w-auto">
           <button 
             onClick={() => setSelectedCategory(null)}
             className={cn(
-              "px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap",
+              "px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all whitespace-nowrap",
               !selectedCategory ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 hover:text-slate-900"
             )}
           >
@@ -410,11 +501,11 @@ export const SkillPortal = () => {
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2",
+                "px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all whitespace-nowrap flex items-center gap-2",
                 selectedCategory === cat.id ? "bg-white text-blue-600 shadow-sm" : "text-slate-500 hover:text-slate-900"
               )}
             >
-              {getIcon(cat.icon)}
+              <span className="opacity-70">{getIcon(cat.icon)}</span>
               {cat.title}
             </button>
           ))}
@@ -423,33 +514,39 @@ export const SkillPortal = () => {
 
       {/* Categories Grid (Only if no search/category filter) */}
       {!selectedCategory && !searchQuery && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-display font-bold text-slate-900">Browse Categories</h3>
-            <p className="text-sm text-slate-500 font-medium">Explore our diverse learning paths</p>
+            <div className="space-y-1">
+              <h3 className="text-2xl font-display font-black text-slate-900 tracking-tight uppercase">Browse Categories</h3>
+              <p className="text-sm text-slate-500 font-medium">Explore our diverse learning paths</p>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {categories.map(cat => (
               <motion.div
                 key={cat.id}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8, scale: 1.02 }}
                 onClick={() => setSelectedCategory(cat.id)}
-                className="group relative h-48 rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer"
+                className="group relative h-64 rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 cursor-pointer transition-all"
               >
                 <img 
                   src={cat.thumbnail} 
                   alt={cat.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-left">
-                  <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center text-white mb-3">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-left">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center text-white mb-4 border border-white/10 group-hover:bg-blue-600 group-hover:border-blue-500 transition-all">
                     {getIcon(cat.icon)}
                   </div>
-                  <h3 className="text-white font-bold text-lg">{cat.title}</h3>
-                  <p className="text-white/60 text-[10px] uppercase tracking-widest font-bold mt-1">
-                    {courses.filter(c => c.categoryId === cat.id).length} Courses
-                  </p>
+                  <h3 className="text-white font-black text-xl tracking-tight">{cat.title}</h3>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-white/60 text-[9px] uppercase tracking-[0.2em] font-black">
+                      {courses.filter(c => c.categoryId === cat.id).length} Courses
+                    </span>
+                    <ArrowRight size={12} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -459,45 +556,49 @@ export const SkillPortal = () => {
 
       {/* Recommended Section (Only if no search/category filter) */}
       {!selectedCategory && !searchQuery && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-display font-bold text-slate-900">Recommended for You</h3>
-            <div className="flex items-center gap-2 text-blue-600 text-sm font-bold cursor-pointer hover:underline">
-              View All <ChevronRight size={16} />
+            <h3 className="text-2xl font-display font-black text-slate-900 tracking-tight uppercase">Recommended for You</h3>
+            <div className="flex items-center gap-3 text-blue-600 text-xs font-black uppercase tracking-widest cursor-pointer group">
+              <span>View All Paths</span>
+              <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <ChevronRight size={16} />
+              </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {courses.slice(0, 3).map(course => (
               <motion.div
                 key={`rec-${course.id}`}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -10, scale: 1.02 }}
                 onClick={() => setSelectedCourse(course)}
-                className="group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer hover:shadow-xl hover:shadow-blue-500/5 transition-all"
+                className="group glass-card rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 cursor-pointer hover:shadow-2xl hover:shadow-blue-500/10 transition-all"
               >
-                <div className="relative h-40">
+                <div className="relative h-48 overflow-hidden">
                   <img 
                     src={course.thumbnail} 
                     alt={course.title}
-                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">
+                  <div className="absolute top-5 left-5">
+                    <span className="bg-white/90 backdrop-blur-xl text-slate-900 px-4 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest shadow-xl border border-white/50">
                       {course.level}
                     </span>
                   </div>
                 </div>
-                <div className="p-5 space-y-3">
-                  <h4 className="font-bold text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                <div className="p-8 space-y-4">
+                  <h4 className="text-lg font-black text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors tracking-tight">
                     {course.title}
                   </h4>
-                  <div className="flex items-center gap-4 text-slate-500 text-xs font-medium">
-                    <div className="flex items-center gap-1">
-                      <Clock size={14} />
+                  <div className="flex items-center gap-6 text-slate-500 text-[10px] font-black uppercase tracking-widest">
+                    <div className="flex items-center gap-2">
+                      <Clock size={14} className="text-blue-500" />
                       {course.duration}
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Users size={14} />
-                      {Math.floor(Math.random() * 5000) + 1000} students
+                    <div className="flex items-center gap-2">
+                      <Users size={14} className="text-blue-500" />
+                      {Math.floor(Math.random() * 5000) + 1000} Students
                     </div>
                   </div>
                 </div>
@@ -535,77 +636,86 @@ export const SkillPortal = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredCourses.map(course => {
             const progress = getCourseProgress(course.id);
             return (
               <motion.div
                 key={course.id}
                 layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden group hover:shadow-xl hover:shadow-blue-500/5 transition-all"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ y: -10 }}
+                className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden group transition-all hover:shadow-2xl hover:shadow-blue-500/10"
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
                   <img 
                     src={course.thumbnail} 
                     alt={course.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[10px] font-bold text-slate-900 uppercase tracking-wider shadow-sm">
+                  <div className="absolute top-5 left-5 flex gap-2">
+                    <span className="px-4 py-1.5 bg-white/90 backdrop-blur-xl rounded-xl text-[9px] font-black text-slate-900 uppercase tracking-[0.15em] shadow-xl border border-white/50">
                       {course.level}
                     </span>
                   </div>
                   <div 
                     onClick={() => setSelectedCourse(course)}
-                    className="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                    className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center cursor-pointer backdrop-blur-[2px]"
                   >
-                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-blue-600 shadow-xl transform scale-90 group-hover:scale-100 transition-transform">
-                      <Play size={24} className="fill-blue-600 ml-1" />
-                    </div>
+                    <motion.div 
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-600 shadow-2xl"
+                    >
+                      <Play size={28} className="fill-blue-600 ml-1" />
+                    </motion.div>
                   </div>
                 </div>
                 
-                <div className="p-6 space-y-4">
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">{course.title}</h4>
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{course.description}</p>
+                <div className="p-8 space-y-6">
+                  <div className="space-y-2">
+                    <div className="label-caps !text-blue-600/60">{course.instructor}</div>
+                    <h4 className="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1 tracking-tight">{course.title}</h4>
+                    <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed font-medium">{course.description}</p>
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    <div className="flex items-center gap-1.5">
-                      <Clock size={14} />
+                  <div className="flex items-center justify-between text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] border-y border-slate-50 py-4">
+                    <div className="flex items-center gap-2">
+                      <Clock size={14} className="text-blue-500" />
                       {course.duration}
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users size={14} />
+                    <div className="flex items-center gap-2">
+                      <Users size={14} className="text-blue-500" />
                       1.2k Students
                     </div>
                   </div>
 
-                  {progress > 0 && (
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center text-[10px] font-bold">
-                        <span className="text-slate-400 uppercase tracking-widest">Progress</span>
-                        <span className="text-blue-600">{progress}%</span>
+                  {progress > 0 ? (
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="label-caps !text-[8px]">Course Progress</span>
+                        <span className="text-xs font-black text-blue-600">{progress}%</span>
                       </div>
-                      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden p-0.5">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${progress}%` }}
-                          className="h-full bg-blue-600 rounded-full"
+                          className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.5)]"
                         />
                       </div>
                     </div>
+                  ) : (
+                    <div className="h-12" />
                   )}
 
                   <button 
                     onClick={() => setSelectedCourse(course)}
-                    className="w-full py-3 bg-slate-50 text-slate-900 rounded-2xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-slate-900 text-white rounded-[1.5rem] text-xs font-black uppercase tracking-[0.2em] hover:bg-blue-600 transition-all flex items-center justify-center gap-3 shadow-xl shadow-slate-200 hover:shadow-blue-200"
                   >
-                    {progress > 0 ? 'Continue Learning' : 'Start Course'}
-                    <ChevronRight size={14} />
+                    {progress > 0 ? 'Continue Learning' : 'Start Journey'}
+                    <ArrowRight size={16} />
                   </button>
                 </div>
               </motion.div>

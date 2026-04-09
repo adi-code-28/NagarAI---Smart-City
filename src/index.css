@@ -15,7 +15,19 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-slate-200/50 shadow-sm;
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
+  }
+
+  .premium-glass {
+    @apply bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_4px_24px_0_rgba(0,0,0,0.04)];
+  }
+
+  .text-data {
+    @apply font-mono tracking-tight;
+  }
+
+  .label-caps {
+    @apply text-[10px] font-black uppercase tracking-[0.2em] text-slate-400;
   }
 
   .custom-scrollbar::-webkit-scrollbar {

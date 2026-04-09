@@ -1,5 +1,5 @@
 {
   "name": "NagarAI - Smart City Intelligence",
-  "description": "AI-powered civic intelligence for smart cities, featuring automated complaint routing, queue prediction, transport optimization, and agriculture advisory services.",
+  "description": "AI-powered civic intelligence for smart cities, featuring automated complaint routing, transport optimization, and agriculture advisory services.",
   "requestFramePermissions": ["camera", "geolocation"]
 }
