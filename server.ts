@@ -82,6 +82,20 @@ async function startServer() {
 
   let events = [
     {
+      id: 'e0',
+      title: 'LIVE: Urban Mobility Summit',
+      category: 'technical',
+      date: 'Today',
+      time: 'Happening Now',
+      location: 'Vigyan Bhawan, Delhi',
+      description: 'Live discussion on the future of transport in Delhi with urban planners and AI experts.',
+      organizer: 'Ministry of Urban Development',
+      image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80',
+      tags: ['Live', 'Transport', 'AI'],
+      isFree: true,
+      isLive: true
+    },
+    {
       id: 'e1',
       title: 'Delhi Smart City Hackathon 2026',
       category: 'hackathon',
@@ -90,7 +104,7 @@ async function startServer() {
       location: 'IIT Delhi, Hauz Khas',
       description: 'A 48-hour hackathon to solve urban challenges using AI and IoT. Win prizes up to ₹5 Lakhs.',
       organizer: 'Delhi Government & IIT Delhi',
-      image: 'https://picsum.photos/seed/hackathon/800/600',
+      image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80',
       tags: ['AI', 'Smart City', 'Innovation'],
       isFree: true,
       registrationUrl: 'https://example.com/hackathon'
@@ -104,7 +118,7 @@ async function startServer() {
       location: 'Dilli Haat, INA',
       description: 'Experience the rich heritage of India through folk dance, music, and crafts from across the country.',
       organizer: 'Delhi Tourism',
-      image: 'https://picsum.photos/seed/cultural/800/600',
+      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
       tags: ['Culture', 'Music', 'Heritage'],
       isFree: false
     },
@@ -117,7 +131,7 @@ async function startServer() {
       location: 'Cyber Hub, Gurgaon',
       description: 'Join the leading developers in the city to discuss the future of Web3 and decentralized applications.',
       organizer: 'TechDelhi Community',
-      image: 'https://picsum.photos/seed/technical/800/600',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
       tags: ['Web3', 'Blockchain', 'Networking'],
       isFree: true
     },
@@ -130,7 +144,7 @@ async function startServer() {
       location: 'India Habitat Centre, Lodhi Road',
       description: 'A workshop focused on using technology for social good and community development.',
       organizer: 'NagarAI Foundation',
-      image: 'https://picsum.photos/seed/social/800/600',
+      image: 'https://images.unsplash.com/photo-1597041066672-442d61028f44?auto=format&fit=crop&w=800&q=80',
       tags: ['Social Good', 'Workshop', 'Community'],
       isFree: true
     },
@@ -143,7 +157,7 @@ async function startServer() {
       location: 'The Piano Man, Safdarjung',
       description: 'An evening of soulful jazz performances by international artists.',
       organizer: 'The Piano Man Jazz Club',
-      image: 'https://picsum.photos/seed/jazz/800/600',
+      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
       tags: ['Jazz', 'Music', 'Nightlife'],
       isFree: false
     },
@@ -156,7 +170,7 @@ async function startServer() {
       location: 'Yamuna Bank, Delhi',
       description: 'Join us for a massive tree plantation drive to make Delhi greener and cleaner.',
       organizer: 'Give Me Trees Trust',
-      image: 'https://picsum.photos/seed/plantation/800/600',
+      image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&w=800&q=80',
       tags: ['Environment', 'Social Service', 'Green Delhi'],
       isFree: true
     },
@@ -169,7 +183,7 @@ async function startServer() {
       location: 'Arun Jaitley Stadium, Delhi',
       description: 'Catch the high-octane T20 action live as the home team takes on the five-time champions.',
       organizer: 'BCCI / IPL',
-      image: 'https://picsum.photos/seed/cricket/800/600',
+      image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80',
       tags: ['Cricket', 'Sports', 'Entertainment'],
       isFree: false
     },
@@ -182,7 +196,7 @@ async function startServer() {
       location: 'Siri Fort Auditorium',
       description: 'A celebration of world cinema featuring screenings, workshops, and interactions with renowned filmmakers.',
       organizer: 'DIFF Foundation',
-      image: 'https://picsum.photos/seed/film/800/600',
+      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
       tags: ['Cinema', 'Art', 'International'],
       isFree: false
     },
@@ -195,7 +209,7 @@ async function startServer() {
       location: 'Pragati Maidan, New Delhi',
       description: 'The biggest gathering of entrepreneurs, investors, and policy makers in the capital.',
       organizer: 'Ministry of Commerce & Industry',
-      image: 'https://picsum.photos/seed/startup/800/600',
+      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80',
       tags: ['Startup', 'Business', 'Economy'],
       isFree: true
     },
@@ -208,7 +222,7 @@ async function startServer() {
       location: 'Jawaharlal Nehru Stadium',
       description: 'Celebrate the festival of colors with the best DJs, organic colors, and traditional sweets.',
       organizer: 'Sunburn Delhi',
-      image: 'https://picsum.photos/seed/holi/800/600',
+      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
       tags: ['Festival', 'Holi', 'Party'],
       isFree: false
     }
@@ -385,11 +399,11 @@ async function startServer() {
 
   // Learning Portal Data
   const categories = [
-    { id: 'jee', title: 'JEE Preparation', description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.', thumbnail: 'https://picsum.photos/seed/jee/800/600', icon: 'GraduationCap' },
-    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://picsum.photos/seed/neet/800/600', icon: 'Activity' },
-    { id: 'class10', title: 'Class 10 Boards', description: 'Complete syllabus coverage for Class 10 Board exams.', thumbnail: 'https://picsum.photos/seed/class10/800/600', icon: 'BookOpen' },
-    { id: 'class12', title: 'Class 12 Boards', description: 'In-depth preparation for Class 12 Board exams and competitive basics.', thumbnail: 'https://picsum.photos/seed/class12/800/600', icon: 'Book' },
-    { id: 'skills', title: 'Skill Development', description: 'Learn Coding, AI, Communication, and more for the future.', thumbnail: 'https://picsum.photos/seed/skills/800/600', icon: 'Zap' }
+    { id: 'jee', title: 'JEE Preparation', description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.', thumbnail: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80', icon: 'GraduationCap' },
+    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80', icon: 'Activity' },
+    { id: 'class10', title: 'Class 10 Boards', description: 'Complete syllabus coverage for Class 10 Board exams.', thumbnail: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80', icon: 'BookOpen' },
+    { id: 'class12', title: 'Class 12 Boards', description: 'In-depth preparation for Class 12 Board exams and competitive basics.', thumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80', icon: 'Book' },
+    { id: 'skills', title: 'Skill Development', description: 'Learn Coding, AI, Communication, and more for the future.', thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80', icon: 'Zap' }
   ];
 
   const courses = [
@@ -399,7 +413,7 @@ async function startServer() {
       categoryId: 'jee',
       title: 'JEE Physics: Mechanics Masterclass',
       description: 'Comprehensive coverage of Mechanics for JEE Main & Advanced. From Kinematics to Rotational Dynamics.',
-      thumbnail: 'https://picsum.photos/seed/physics/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80',
       instructor: 'Alakh Pandey (PW)',
       level: 'Advanced',
       duration: '45 Hours',
@@ -408,7 +422,6 @@ async function startServer() {
           id: 'jee-p1-l1', 
           courseId: 'jee-p1', 
           title: 'Introduction to Vectors', 
-          videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', 
           duration: '52m', 
           order: 1,
           content: `
@@ -428,10 +441,10 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'jee-p1-l2', courseId: 'jee-p1', title: 'Laws of Motion - Part 1', videoUrl: 'https://www.youtube.com/embed/XqE6-X7uL-U', duration: '58m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Newton\'s Laws of Motion</h3><p>Newton\'s laws of motion are three physical laws that, together, laid the foundation for classical mechanics.</p>' },
-        { id: 'jee-p1-l3', courseId: 'jee-p1', title: 'Work, Energy and Power', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '64m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Work-Energy Theorem</h3><p>The work done by the net force on a particle equals the change in its kinetic energy.</p>' },
-        { id: 'jee-p1-l4', courseId: 'jee-p1', title: 'Circular Motion', videoUrl: 'https://www.youtube.com/embed/XqE6-X7uL-U', duration: '55m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Uniform Circular Motion</h3><p>Motion of an object in a circle at a constant speed.</p>' },
-        { id: 'jee-p1-l5', courseId: 'jee-p1', title: 'Rotational Dynamics', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '70m', order: 5, content: '<h3 class="text-xl font-bold mb-4">Theory: Moment of Inertia</h3><p>A quantity expressing a body\'s tendency to resist angular acceleration.</p>' }
+        { id: 'jee-p1-l2', courseId: 'jee-p1', title: 'Laws of Motion - Part 1', duration: '58m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Newton\'s Laws of Motion</h3><p>Newton\'s laws of motion are three physical laws that, together, laid the foundation for classical mechanics.</p>' },
+        { id: 'jee-p1-l3', courseId: 'jee-p1', title: 'Work, Energy and Power', duration: '64m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Work-Energy Theorem</h3><p>The work done by the net force on a particle equals the change in its kinetic energy.</p>' },
+        { id: 'jee-p1-l4', courseId: 'jee-p1', title: 'Circular Motion', duration: '55m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Uniform Circular Motion</h3><p>Motion of an object in a circle at a constant speed.</p>' },
+        { id: 'jee-p1-l5', courseId: 'jee-p1', title: 'Rotational Dynamics', duration: '70m', order: 5, content: '<h3 class="text-xl font-bold mb-4">Theory: Moment of Inertia</h3><p>A quantity expressing a body\'s tendency to resist angular acceleration.</p>' }
       ]
     },
     {
@@ -439,7 +452,7 @@ async function startServer() {
       categoryId: 'jee',
       title: 'JEE Chemistry: Organic Fundamentals',
       description: 'Master the core concepts of Organic Chemistry, reaction mechanisms, and IUPAC nomenclature.',
-      thumbnail: 'https://picsum.photos/seed/chemistry_adv/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&w=800&q=80',
       instructor: 'Dr. Pankaj Sijairya',
       level: 'Advanced',
       duration: '38 Hours',
@@ -448,7 +461,6 @@ async function startServer() {
           id: 'jee-c1-l1', 
           courseId: 'jee-c1', 
           title: 'General Organic Chemistry (GOC)', 
-          videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', 
           duration: '72m', 
           order: 1,
           content: `
@@ -468,8 +480,8 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'jee-c1-l2', courseId: 'jee-c1', title: 'Isomerism in Organic Compounds', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '65m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Isomerism</h3><p>Isomers are compounds with the same molecular formula but different structural arrangements or spatial orientations.</p>' },
-        { id: 'jee-c1-l3', courseId: 'jee-c1', title: 'Reaction Mechanisms', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '80m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Reaction Mechanisms</h3><p>Detailed step-by-step description of how a chemical reaction occurs, including intermediates and transition states.</p>' }
+        { id: 'jee-c1-l2', courseId: 'jee-c1', title: 'Isomerism in Organic Compounds', duration: '65m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Isomerism</h3><p>Isomers are compounds with the same molecular formula but different structural arrangements or spatial orientations.</p>' },
+        { id: 'jee-c1-l3', courseId: 'jee-c1', title: 'Reaction Mechanisms', duration: '80m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Reaction Mechanisms</h3><p>Detailed step-by-step description of how a chemical reaction occurs, including intermediates and transition states.</p>' }
       ]
     },
     {
@@ -477,7 +489,7 @@ async function startServer() {
       categoryId: 'jee',
       title: 'JEE Maths: Calculus for Advanced',
       description: 'Deep dive into Differential and Integral Calculus for JEE Advanced level problem solving.',
-      thumbnail: 'https://picsum.photos/seed/maths_advanced/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sachin Sir (PW)',
       level: 'Advanced',
       duration: '50 Hours',
@@ -486,7 +498,6 @@ async function startServer() {
           id: 'jee-m1-l1', 
           courseId: 'jee-m1', 
           title: 'Limits, Continuity & Differentiability', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
           duration: '80m', 
           order: 1,
           content: `
@@ -506,9 +517,9 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'jee-m1-l2', courseId: 'jee-m1', title: 'Application of Derivatives', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '75m', order: 2 },
-        { id: 'jee-m1-l3', courseId: 'jee-m1', title: 'Definite Integration', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '90m', order: 3 },
-        { id: 'jee-m1-l4', courseId: 'jee-m1', title: 'Differential Equations', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '85m', order: 4 }
+        { id: 'jee-m1-l2', courseId: 'jee-m1', title: 'Application of Derivatives', duration: '75m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Application of Derivatives</h3><p>Using derivatives to find rates of change, tangents, normals, and maxima/minima.</p>' },
+        { id: 'jee-m1-l3', courseId: 'jee-m1', title: 'Definite Integration', duration: '90m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Definite Integration</h3><p>Calculating the area under a curve between two points.</p>' },
+        { id: 'jee-m1-l4', courseId: 'jee-m1', title: 'Differential Equations', duration: '85m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Differential Equations</h3><p>Equations involving derivatives of an unknown function.</p>' }
       ]
     },
     {
@@ -516,7 +527,7 @@ async function startServer() {
       categoryId: 'jee',
       title: 'JEE Physics: Electromagnetism (Part 1)',
       description: 'Master Electrostatics, Current Electricity, and Magnetism for JEE.',
-      thumbnail: 'https://picsum.photos/seed/electricity_adv/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Alakh Pandey (PW)',
       level: 'Advanced',
       duration: '40 Hours',
@@ -525,7 +536,6 @@ async function startServer() {
           id: 'jee-p2-l1', 
           courseId: 'jee-p2', 
           title: 'Electric Charges & Fields', 
-          videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', 
           duration: '65m', 
           order: 1,
           content: `
@@ -541,7 +551,7 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'jee-p2-l2', courseId: 'jee-p2', title: 'Current Electricity', videoUrl: 'https://www.youtube.com/embed/XqE6-X7uL-U', duration: '70m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Ohm\'s Law</h3><p>V = IR, where V is voltage, I is current, and R is resistance.</p>' }
+        { id: 'jee-p2-l2', courseId: 'jee-p2', title: 'Current Electricity', duration: '70m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Ohm\'s Law</h3><p>V = IR, where V is voltage, I is current, and R is resistance.</p>' }
       ]
     },
 
@@ -551,7 +561,7 @@ async function startServer() {
       categoryId: 'neet',
       title: 'NEET Biology: Human Physiology (Part 1)',
       description: 'Detailed exploration of human body systems, vital for NEET aspirants.',
-      thumbnail: 'https://picsum.photos/seed/biology_physiology/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80',
       instructor: 'Dr. Samapti Mam',
       level: 'Intermediate',
       duration: '42 Hours',
@@ -560,7 +570,6 @@ async function startServer() {
           id: 'neet-b1-l1', 
           courseId: 'neet-b1', 
           title: 'Digestion and Absorption', 
-          videoUrl: 'https://www.youtube.com/embed/pC_278v6v_Y', 
           duration: '55m', 
           order: 1,
           content: `
@@ -580,8 +589,8 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'neet-b1-l2', courseId: 'neet-b1', title: 'Breathing and Exchange of Gases', videoUrl: 'https://www.youtube.com/embed/pC_278v6v_Y', duration: '60m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Respiration</h3><p>The process of exchange of O2 from the atmosphere with CO2 produced by the cells.</p>' },
-        { id: 'neet-b1-l3', courseId: 'neet-b1', title: 'Body Fluids and Circulation', videoUrl: 'https://www.youtube.com/embed/pC_278v6v_Y', duration: '65m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Circulatory System</h3><p>Blood and lymph are the main circulating fluids in the human body.</p>' }
+        { id: 'neet-b1-l2', courseId: 'neet-b1', title: 'Breathing and Exchange of Gases', duration: '60m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Respiration</h3><p>The process of exchange of O2 from the atmosphere with CO2 produced by the cells.</p>' },
+        { id: 'neet-b1-l3', courseId: 'neet-b1', title: 'Body Fluids and Circulation', duration: '65m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Circulatory System</h3><p>Blood and lymph are the main circulating fluids in the human body.</p>' }
       ]
     },
     {
@@ -589,7 +598,7 @@ async function startServer() {
       categoryId: 'neet',
       title: 'NEET Physics: Ray Optics',
       description: 'Master the principles of light, reflection, and refraction for NEET.',
-      thumbnail: 'https://picsum.photos/seed/optics_neet/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1514373941175-0a141072bbc8?auto=format&fit=crop&w=800&q=80',
       instructor: 'MR Sir',
       level: 'Intermediate',
       duration: '30 Hours',
@@ -598,7 +607,6 @@ async function startServer() {
           id: 'neet-p1-l1', 
           courseId: 'neet-p1', 
           title: 'Reflection of Light', 
-          videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', 
           duration: '50m', 
           order: 1,
           content: `
@@ -617,8 +625,8 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'neet-p1-l2', courseId: 'neet-p1', title: 'Refraction & Lenses', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Snell\'s Law</h3><p>n1 sinθ1 = n2 sinθ2, where n is refractive index.</p>' },
-        { id: 'neet-p1-l3', courseId: 'neet-p1', title: 'Optical Instruments', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Simple Microscope</h3><p>A simple microscope is a convex lens of short focal length.</p>' }
+        { id: 'neet-p1-l2', courseId: 'neet-p1', title: 'Refraction & Lenses', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Snell\'s Law</h3><p>n1 sinθ1 = n2 sinθ2, where n is refractive index.</p>' },
+        { id: 'neet-p1-l3', courseId: 'neet-p1', title: 'Optical Instruments', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Simple Microscope</h3><p>A simple microscope is a convex lens of short focal length.</p>' }
       ]
     },
     {
@@ -626,7 +634,7 @@ async function startServer() {
       categoryId: 'neet',
       title: 'NEET Chemistry: Chemical Bonding',
       description: 'Understand the forces that hold atoms together in molecules.',
-      thumbnail: 'https://picsum.photos/seed/bonding_neet/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sudhanshu Sir (PW)',
       level: 'Intermediate',
       duration: '25 Hours',
@@ -635,7 +643,6 @@ async function startServer() {
           id: 'neet-c1-l1', 
           courseId: 'neet-c1', 
           title: 'Ionic & Covalent Bonding', 
-          videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', 
           duration: '60m', 
           order: 1,
           content: `
@@ -655,8 +662,8 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'neet-c1-l2', courseId: 'neet-c1', title: 'VSEPR Theory', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '55m', order: 2 },
-        { id: 'neet-c1-l3', courseId: 'neet-c1', title: 'Molecular Orbital Theory', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '65m', order: 3 }
+        { id: 'neet-c1-l2', courseId: 'neet-c1', title: 'VSEPR Theory', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: VSEPR Theory</h3><p>Valence Shell Electron Pair Repulsion theory used to predict the geometry of individual molecules.</p>' },
+        { id: 'neet-c1-l3', courseId: 'neet-c1', title: 'Molecular Orbital Theory', duration: '65m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Molecular Orbital Theory</h3><p>A method for describing the electronic structure of molecules using quantum mechanics.</p>' }
       ]
     },
     {
@@ -664,7 +671,7 @@ async function startServer() {
       categoryId: 'neet',
       title: 'NEET Biology: Genetics & Evolution',
       description: 'Master the principles of inheritance and the history of life.',
-      thumbnail: 'https://picsum.photos/seed/genetics_neet/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80',
       instructor: 'Dr. Samapti Mam (PW)',
       level: 'Advanced',
       duration: '45 Hours',
@@ -673,7 +680,6 @@ async function startServer() {
           id: 'neet-b2-l1', 
           courseId: 'neet-b2', 
           title: 'Mendelian Genetics', 
-          videoUrl: 'https://www.youtube.com/embed/pC_278v6v_Y', 
           duration: '70m', 
           order: 1,
           content: `
@@ -693,7 +699,7 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'neet-b2-l2', courseId: 'neet-b2', title: 'Molecular Basis of Inheritance', videoUrl: 'https://www.youtube.com/embed/pC_278v6v_Y', duration: '80m', order: 2 }
+        { id: 'neet-b2-l2', courseId: 'neet-b2', title: 'Molecular Basis of Inheritance', duration: '80m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Molecular Basis of Inheritance</h3><p>Study of genes at the molecular level, including DNA replication, transcription, and translation.</p>' }
       ]
     },
 
@@ -703,7 +709,7 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Maths: Full Board Prep (Algebra)',
       description: 'Complete syllabus coverage for Class 10 Mathematics Board Exams.',
-      thumbnail: 'https://picsum.photos/seed/algebra_c10/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sunil Sir',
       level: 'Beginner',
       duration: '35 Hours',
@@ -712,7 +718,6 @@ async function startServer() {
           id: 'c10-m1-l1', 
           courseId: 'c10-m1', 
           title: 'Real Numbers', 
-          videoUrl: 'https://www.youtube.com/embed/7u_X2_6_X_M', 
           duration: '45m', 
           order: 1,
           content: `
@@ -728,8 +733,8 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'c10-m1-l2', courseId: 'c10-m1', title: 'Polynomials', videoUrl: 'https://www.youtube.com/embed/7u_X2_6_X_M', duration: '50m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Polynomials</h3><p>An expression consisting of variables and coefficients.</p>' },
-        { id: 'c10-m1-l3', courseId: 'c10-m1', title: 'Quadratic Equations', videoUrl: 'https://www.youtube.com/embed/7u_X2_6_X_M', duration: '55m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Quadratic Formula</h3><p>x = [-b ± √(b² - 4ac)] / 2a</p>' }
+        { id: 'c10-m1-l2', courseId: 'c10-m1', title: 'Polynomials', duration: '50m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Polynomials</h3><p>An expression consisting of variables and coefficients.</p>' },
+        { id: 'c10-m1-l3', courseId: 'c10-m1', title: 'Quadratic Equations', duration: '55m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Quadratic Formula</h3><p>x = [-b ± √(b² - 4ac)] / 2a</p>' }
       ]
     },
     {
@@ -737,7 +742,7 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Science: Chemical Reactions',
       description: 'Understand the core concepts of chemical reactions and equations.',
-      thumbnail: 'https://picsum.photos/seed/reactions_c10/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&w=800&q=80',
       instructor: 'Rakshita Mam (PW)',
       level: 'Beginner',
       duration: '28 Hours',
@@ -746,7 +751,6 @@ async function startServer() {
           id: 'c10-s1-l1', 
           courseId: 'c10-s1', 
           title: 'Types of Chemical Reactions', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
           duration: '40m', 
           order: 1,
           content: `
@@ -767,9 +771,9 @@ async function startServer() {
             </div>
           `
         },
-        { id: 'c10-s1-l2', courseId: 'c10-s1', title: 'Balancing Chemical Equations', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '45m', order: 2 },
-        { id: 'c10-s1-l3', courseId: 'c10-s1', title: 'Acids, Bases and Salts', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '50m', order: 3 },
-        { id: 'c10-s1-l4', courseId: 'c10-s1', title: 'Metals and Non-Metals', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '55m', order: 4 }
+        { id: 'c10-s1-l2', courseId: 'c10-s1', title: 'Balancing Chemical Equations', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Balancing Chemical Equations</h3><p>Ensuring the number of atoms of each element is the same on both sides of the equation.</p>' },
+        { id: 'c10-s1-l3', courseId: 'c10-s1', title: 'Acids, Bases and Salts', duration: '50m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Acids, Bases and Salts</h3><p>Understanding pH, neutralization reactions, and properties of various salts.</p>' },
+        { id: 'c10-s1-l4', courseId: 'c10-s1', title: 'Metals and Non-Metals', duration: '55m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Metals and Non-Metals</h3><p>Physical and chemical properties of metals and non-metals, and their reactivity series.</p>' }
       ]
     },
     {
@@ -777,13 +781,13 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Maths: Trigonometry',
       description: 'Master the basics and applications of Trigonometry for Boards.',
-      thumbnail: 'https://picsum.photos/seed/trigonometry_c10/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sunil Sir (PW)',
       level: 'Beginner',
       duration: '20 Hours',
       lectures: [
-        { id: 'c10-m2-l1', courseId: 'c10-m2', title: 'Introduction to Trigonometry', videoUrl: 'https://www.youtube.com/embed/7u_X2_6_X_M', duration: '60m', order: 1 },
-        { id: 'c10-m2-l2', courseId: 'c10-m2', title: 'Trigonometric Identities', videoUrl: 'https://www.youtube.com/embed/7u_X2_6_X_M', duration: '65m', order: 2 }
+        { id: 'c10-m2-l1', courseId: 'c10-m2', title: 'Introduction to Trigonometry', duration: '60m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Introduction to Trigonometry</h3><p>Study of relationships between side lengths and angles of triangles.</p>' },
+        { id: 'c10-m2-l2', courseId: 'c10-m2', title: 'Trigonometric Identities', duration: '65m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Trigonometric Identities</h3><p>Equations involving trigonometric functions that are true for every value of the occurring variables.</p>' }
       ]
     },
     {
@@ -791,13 +795,13 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Social Science: History',
       description: 'Comprehensive guide to Nationalism in India and Europe.',
-      thumbnail: 'https://picsum.photos/seed/history/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80',
       instructor: 'Digraj Sir',
       level: 'Beginner',
       duration: '20 Hours',
       lectures: [
-        { id: 'c10-ss1-l1', courseId: 'c10-ss1', title: 'Nationalism in India', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '55m', order: 1 },
-        { id: 'c10-ss1-l2', courseId: 'c10-ss1', title: 'The Rise of Nationalism in Europe', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '60m', order: 2 }
+        { id: 'c10-ss1-l1', courseId: 'c10-ss1', title: 'Nationalism in India', duration: '55m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Nationalism in India</h3><p>The growth of modern nationalism in India and the struggle for independence.</p>' },
+        { id: 'c10-ss1-l2', courseId: 'c10-ss1', title: 'The Rise of Nationalism in Europe', duration: '60m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: The Rise of Nationalism in Europe</h3><p>The development of nationalism as a force which brought about sweeping changes in the political and mental world of Europe.</p>' }
       ]
     },
 
@@ -807,14 +811,14 @@ async function startServer() {
       categoryId: 'class12',
       title: 'Class 12 Physics: Electrostatics',
       description: 'In-depth study of electric charges and fields for Board exams.',
-      thumbnail: 'https://picsum.photos/seed/physics12/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Abhishek Sir',
       level: 'Intermediate',
       duration: '32 Hours',
       lectures: [
-        { id: 'c12-p1-l1', courseId: 'c12-p1', title: 'Electric Charges & Fields', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '55m', order: 1 },
-        { id: 'c12-p1-l2', courseId: 'c12-p1', title: 'Electrostatic Potential', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '60m', order: 2 },
-        { id: 'c12-p1-l3', courseId: 'c12-p1', title: 'Capacitance', videoUrl: 'https://www.youtube.com/embed/8vO02r0220M', duration: '50m', order: 3 }
+        { id: 'c12-p1-l1', courseId: 'c12-p1', title: 'Electric Charges & Fields', duration: '55m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Electric Charges & Fields</h3><p>Study of electric charges at rest and the fields they create.</p>' },
+        { id: 'c12-p1-l2', courseId: 'c12-p1', title: 'Electrostatic Potential', duration: '60m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Electrostatic Potential</h3><p>Work done per unit charge in bringing a charge from infinity to a point.</p>' },
+        { id: 'c12-p1-l3', courseId: 'c12-p1', title: 'Capacitance', duration: '50m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Capacitance</h3><p>The ability of a system to store an electric charge.</p>' }
       ]
     },
     {
@@ -822,14 +826,14 @@ async function startServer() {
       categoryId: 'class12',
       title: 'Class 12 Chemistry: Solid State',
       description: 'Master the structure and properties of solid matter.',
-      thumbnail: 'https://picsum.photos/seed/solidstate/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Bharat Sir (PW)',
       level: 'Intermediate',
       duration: '22 Hours',
       lectures: [
-        { id: 'c12-c1-l1', courseId: 'c12-c1', title: 'Crystal Lattices & Unit Cells', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '50m', order: 1 },
-        { id: 'c12-c1-l2', courseId: 'c12-c1', title: 'Imperfections in Solids', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '45m', order: 2 },
-        { id: 'c12-c1-l3', courseId: 'c12-c1', title: 'Solutions & Colligative Properties', videoUrl: 'https://www.youtube.com/embed/f_zG6mH1vC8', duration: '60m', order: 3 }
+        { id: 'c12-c1-l1', courseId: 'c12-c1', title: 'Crystal Lattices & Unit Cells', duration: '50m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Crystal Lattices & Unit Cells</h3><p>The symmetrical three-dimensional arrangement of atoms inside a crystal.</p>' },
+        { id: 'c12-c1-l2', courseId: 'c12-c1', title: 'Imperfections in Solids', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Imperfections in Solids</h3><p>Deviations from the perfectly ordered arrangement of atoms in a crystal.</p>' },
+        { id: 'c12-c1-l3', courseId: 'c12-c1', title: 'Solutions & Colligative Properties', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Solutions & Colligative Properties</h3><p>Properties of solutions that depend on the ratio of the number of solute particles to the number of solvent molecules.</p>' }
       ]
     },
     {
@@ -837,13 +841,13 @@ async function startServer() {
       categoryId: 'class12',
       title: 'Class 12 Maths: Relations & Functions',
       description: 'The foundation of Class 12 Mathematics for Boards.',
-      thumbnail: 'https://picsum.photos/seed/relations/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sachin Sir (PW)',
       level: 'Intermediate',
       duration: '25 Hours',
       lectures: [
-        { id: 'c12-m1-l1', courseId: 'c12-m1', title: 'Types of Relations', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '55m', order: 1 },
-        { id: 'c12-m1-l2', courseId: 'c12-m1', title: 'Inverse Trigonometric Functions', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '60m', order: 2 }
+        { id: 'c12-m1-l1', courseId: 'c12-m1', title: 'Types of Relations', duration: '55m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Types of Relations</h3><p>Reflexive, symmetric, transitive, and equivalence relations.</p>' },
+        { id: 'c12-m1-l2', courseId: 'c12-m1', title: 'Inverse Trigonometric Functions', duration: '60m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Inverse Trigonometric Functions</h3><p>Inverse functions of the basic trigonometric functions.</p>' }
       ]
     },
     {
@@ -851,14 +855,14 @@ async function startServer() {
       categoryId: 'class12',
       title: 'Class 12 English: Flamingo & Vistas',
       description: 'Complete literature guide for Class 12 English Core.',
-      thumbnail: 'https://picsum.photos/seed/english/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80',
       instructor: 'Shipra Mam',
       level: 'Beginner',
       duration: '20 Hours',
       lectures: [
-        { id: 'c12-e1-l1', courseId: 'c12-e1', title: 'The Last Lesson', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '40m', order: 1 },
-        { id: 'c12-e1-l2', courseId: 'c12-e1', title: 'Lost Spring', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '45m', order: 2 },
-        { id: 'c12-e1-l3', courseId: 'c12-e1', title: 'Deep Water', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '50m', order: 3 }
+        { id: 'c12-e1-l1', courseId: 'c12-e1', title: 'The Last Lesson', duration: '40m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: The Last Lesson</h3><p>A story about the importance of one\'s language and the impact of war on education.</p>' },
+        { id: 'c12-e1-l2', courseId: 'c12-e1', title: 'Lost Spring', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Lost Spring</h3><p>Stories of stolen childhood and the plight of street children.</p>' },
+        { id: 'c12-e1-l3', courseId: 'c12-e1', title: 'Deep Water', duration: '50m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Deep Water</h3><p>An autobiographical account of overcoming fear of water.</p>' }
       ]
     },
 
@@ -868,7 +872,7 @@ async function startServer() {
       categoryId: 'skills',
       title: 'Full Stack Web Development (MERN)',
       description: 'Learn to build modern web applications using React, Node, and MongoDB.',
-      thumbnail: 'https://picsum.photos/seed/webdev/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
       instructor: 'Traversy Media',
       level: 'Beginner',
       duration: '60 Hours',
@@ -877,7 +881,6 @@ async function startServer() {
           id: 'skill-w1-l1', 
           courseId: 'skill-w1', 
           title: 'HTML & CSS Crash Course', 
-          videoUrl: 'https://www.youtube.com/embed/mU6an7qykQE', 
           duration: '90m', 
           order: 1,
           content: `
@@ -901,9 +904,9 @@ nav {
             </div>
           `
         },
-        { id: 'skill-w1-l2', courseId: 'skill-w1', title: 'JavaScript Fundamentals', videoUrl: 'https://www.youtube.com/embed/hdI2bqOjy3c', duration: '120m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: JavaScript</h3><p>JavaScript is a high-level, often just-in-time compiled language that conforms to the ECMAScript specification.</p>' },
-        { id: 'skill-w1-l3', courseId: 'skill-w1', title: 'React JS Tutorial', videoUrl: 'https://www.youtube.com/embed/SqcY0GlETPk', duration: '105m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: React Hooks</h3><p>Hooks are functions that let you "hook into" React state and lifecycle features from function components.</p>' },
-        { id: 'skill-w1-l4', courseId: 'skill-w1', title: 'Node.js & Express', videoUrl: 'https://www.youtube.com/embed/fBNz5xF-Kx4', duration: '110m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Express Middleware</h3><p>Middleware functions are functions that have access to the request object, the response object, and the next middleware function in the application’s request-response cycle.</p>' }
+        { id: 'skill-w1-l2', courseId: 'skill-w1', title: 'JavaScript Fundamentals', duration: '120m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: JavaScript</h3><p>JavaScript is a high-level, often just-in-time compiled language that conforms to the ECMAScript specification.</p>' },
+        { id: 'skill-w1-l3', courseId: 'skill-w1', title: 'React JS Tutorial', duration: '105m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: React Hooks</h3><p>Hooks are functions that let you "hook into" React state and lifecycle features from function components.</p>' },
+        { id: 'skill-w1-l4', courseId: 'skill-w1', title: 'Node.js & Express', duration: '110m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Express Middleware</h3><p>Middleware functions are functions that have access to the request object, the response object, and the next middleware function in the application’s request-response cycle.</p>' }
       ]
     },
     {
@@ -911,7 +914,7 @@ nav {
       categoryId: 'skills',
       title: 'AI & Machine Learning Basics (Intro)',
       description: 'Introduction to Artificial Intelligence and building your first ML models.',
-      thumbnail: 'https://picsum.photos/seed/ai/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80',
       instructor: 'Andrew Ng',
       level: 'Intermediate',
       duration: '45 Hours',
@@ -920,7 +923,6 @@ nav {
           id: 'skill-a1-l1', 
           courseId: 'skill-a1', 
           title: 'What is Machine Learning?', 
-          videoUrl: 'https://www.youtube.com/embed/PPLop4L2eGk', 
           duration: '45m', 
           order: 1,
           content: `
@@ -934,8 +936,8 @@ nav {
             </ul>
           `
         },
-        { id: 'skill-a1-l2', courseId: 'skill-a1', title: 'Supervised vs Unsupervised', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '50m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Supervised Learning</h3><p>Regression and Classification are the two main types of supervised learning.</p>' },
-        { id: 'skill-a1-l3', courseId: 'skill-a1', title: 'Neural Networks Explained', videoUrl: 'https://www.youtube.com/embed/aircAruvnKk', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Neural Networks</h3><p>Inspired by the human brain, neural networks consist of layers of interconnected nodes.</p>' }
+        { id: 'skill-a1-l2', courseId: 'skill-a1', title: 'Supervised vs Unsupervised', duration: '50m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Supervised Learning</h3><p>Regression and Classification are the two main types of supervised learning.</p>' },
+        { id: 'skill-a1-l3', courseId: 'skill-a1', title: 'Neural Networks Explained', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Neural Networks</h3><p>Inspired by the human brain, neural networks consist of layers of interconnected nodes.</p>' }
       ]
     },
     {
@@ -943,7 +945,7 @@ nav {
       categoryId: 'skills',
       title: 'UI/UX Design Fundamentals',
       description: 'Learn the principles of design, user research, and prototyping in Figma.',
-      thumbnail: 'https://picsum.photos/seed/uiux/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=800&q=80',
       instructor: 'Gary Simon',
       level: 'Beginner',
       duration: '20 Hours',
@@ -952,12 +954,11 @@ nav {
           id: 'skill-u1-l1', 
           courseId: 'skill-u1', 
           title: 'UI Design for Beginners', 
-          videoUrl: 'https://www.youtube.com/embed/c9Wg6Cb_YlU', 
           duration: '60m', 
           order: 1,
           content: '<h3 class="text-xl font-bold mb-4">Theory: UI Design</h3><p>User Interface design is the process of making interfaces in software or computerized devices with a focus on looks or style.</p>'
         },
-        { id: 'skill-u1-l2', courseId: 'skill-u1', title: 'UX Research Methods', videoUrl: 'https://www.youtube.com/embed/c9Wg6Cb_YlU', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: UX Research</h3><p>User experience research is the systematic study of target users and their requirements, to add realistic contexts and insights to design processes.</p>' }
+        { id: 'skill-u1-l2', courseId: 'skill-u1', title: 'UX Research Methods', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: UX Research</h3><p>User experience research is the systematic study of target users and their requirements, to add realistic contexts and insights to design processes.</p>' }
       ]
     },
     {
@@ -965,7 +966,7 @@ nav {
       categoryId: 'skills',
       title: 'Python for Beginners',
       description: 'The complete guide to starting your programming journey with Python.',
-      thumbnail: 'https://picsum.photos/seed/python/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
       instructor: 'Mosh Hamedani',
       level: 'Beginner',
       duration: '30 Hours',
@@ -974,7 +975,6 @@ nav {
           id: 'skill-p1-l1', 
           courseId: 'skill-p1', 
           title: 'Python Tutorial for Beginners', 
-          videoUrl: 'https://www.youtube.com/embed/_uQrJ0TkZlc', 
           duration: '360m', 
           order: 1,
           content: '<h3 class="text-xl font-bold mb-4">Theory: Python Basics</h3><p>Python is an interpreted, high-level and general-purpose programming language.</p>'
@@ -986,7 +986,7 @@ nav {
       categoryId: 'skills',
       title: 'Data Science with Python',
       description: 'Learn NumPy, Pandas, and Matplotlib for data analysis.',
-      thumbnail: 'https://picsum.photos/seed/datascience/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1551288049-bbdac8626ad1?auto=format&fit=crop&w=800&q=80',
       instructor: 'Krish Naik',
       level: 'Intermediate',
       duration: '40 Hours',
@@ -995,14 +995,13 @@ nav {
           id: 'skill-d1-l1', 
           courseId: 'skill-d1', 
           title: 'Introduction to Data Science', 
-          videoUrl: 'https://www.youtube.com/embed/X3paOmcrTjQ', 
           duration: '15m', 
           order: 1,
           content: '<h3 class="text-xl font-bold mb-4">Theory: Data Science</h3><p>Data science is an interdisciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from noisy, structured and unstructured data.</p>'
         },
-        { id: 'skill-d1-l2', courseId: 'skill-d1', title: 'NumPy for Data Science', videoUrl: 'https://www.youtube.com/embed/QUT1VGiL8iU', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: NumPy</h3><p>NumPy is a library for the Python programming language, adding support for large, multi-dimensional arrays and matrices.</p>' },
-        { id: 'skill-d1-l3', courseId: 'skill-d1', title: 'Pandas Masterclass', videoUrl: 'https://www.youtube.com/embed/vmEHCJofslg', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Pandas</h3><p>Pandas is a software library written for the Python programming language for data manipulation and analysis.</p>' },
-        { id: 'skill-d1-l4', courseId: 'skill-d1', title: 'Matplotlib Visualization', videoUrl: 'https://www.youtube.com/embed/OZOOLe2ol6w', duration: '30m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Matplotlib</h3><p>Matplotlib is a plotting library for the Python programming language and its numerical mathematics extension NumPy.</p>' }
+        { id: 'skill-d1-l2', courseId: 'skill-d1', title: 'NumPy for Data Science', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: NumPy</h3><p>NumPy is a library for the Python programming language, adding support for large, multi-dimensional arrays and matrices.</p>' },
+        { id: 'skill-d1-l3', courseId: 'skill-d1', title: 'Pandas Masterclass', duration: '60m', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: Pandas</h3><p>Pandas is a software library written for the Python programming language for data manipulation and analysis.</p>' },
+        { id: 'skill-d1-l4', courseId: 'skill-d1', title: 'Matplotlib Visualization', duration: '30m', order: 4, content: '<h3 class="text-xl font-bold mb-4">Theory: Matplotlib</h3><p>Matplotlib is a plotting library for the Python programming language and its numerical mathematics extension NumPy.</p>' }
       ]
     },
     {
@@ -1010,22 +1009,14 @@ nav {
       categoryId: 'skills',
       title: 'Advanced Full Stack Web Development',
       description: 'Master HTML, CSS, JS, React, and Node.js with advanced projects.',
-      thumbnail: 'https://picsum.photos/seed/webdev_adv/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80',
       instructor: 'Hitesh Choudhary',
       level: 'Beginner',
       duration: '100 Hours',
       lectures: [
-        { 
-          id: 'skill-d2-l1', 
-          courseId: 'skill-d2', 
-          title: 'HTML & CSS Basics', 
-          videoUrl: 'https://www.youtube.com/embed/HcOc7P5BMi4', 
-          duration: '2h', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Advanced CSS</h3><p>Grid, Animations, and Responsive Design.</p>'
-        },
-        { id: 'skill-d2-l2', courseId: 'skill-d2', title: 'JavaScript Essentials', videoUrl: 'https://www.youtube.com/embed/W6NZfCO5SIk', duration: '3h', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: ES6+ Features</h3><p>Arrow functions, Destructuring, and Promises.</p>' },
-        { id: 'skill-d2-l3', courseId: 'skill-d2', title: 'React.js Crash Course', videoUrl: 'https://www.youtube.com/embed/bMknfKXIFA8', duration: '4h', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: State Management</h3><p>Context API and Redux.</p>' }
+        { id: 'skill-d2-l1', courseId: 'skill-d2', title: 'HTML & CSS Basics', duration: '2h', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Advanced CSS</h3><p>Grid, Animations, and Responsive Design.</p>' },
+        { id: 'skill-d2-l2', courseId: 'skill-d2', title: 'JavaScript Essentials', duration: '3h', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: ES6+ Features</h3><p>Arrow functions, Destructuring, and Promises.</p>' },
+        { id: 'skill-d2-l3', courseId: 'skill-d2', title: 'React.js Crash Course', duration: '4h', order: 3, content: '<h3 class="text-xl font-bold mb-4">Theory: State Management</h3><p>Context API and Redux.</p>' }
       ]
     },
     {
@@ -1033,21 +1024,13 @@ nav {
       categoryId: 'jee',
       title: 'JEE Physics: Electrostatics & Capacitance',
       description: 'Deep dive into Electric Fields, Potential, and Capacitance.',
-      thumbnail: 'https://picsum.photos/seed/electrostatics_c12/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Alakh Pandey',
       level: 'Advanced',
       duration: '45 Hours',
       lectures: [
-        { 
-          id: 'jee-p3-l1', 
-          courseId: 'jee-p3', 
-          title: 'Coulomb\'s Law', 
-          videoUrl: 'https://www.youtube.com/embed/3_V_2_8X4_o', 
-          duration: '50m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Coulomb\'s Law</h3><p>The force between two point charges is directly proportional to the product of the charges and inversely proportional to the square of the distance between them.</p>'
-        },
-        { id: 'jee-p3-l2', courseId: 'jee-p3', title: 'Electric Field Lines', videoUrl: 'https://www.youtube.com/embed/vN_v_v_v_v_v', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Electric Field Lines</h3><p>Imaginary lines used to visualize the direction and strength of an electric field.</p>' }
+        { id: 'jee-p3-l1', courseId: 'jee-p3', title: 'Coulomb\'s Law', duration: '50m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Coulomb\'s Law</h3><p>The force between two point charges is directly proportional to the product of the charges and inversely proportional to the square of the distance between them.</p>' },
+        { id: 'jee-p3-l2', courseId: 'jee-p3', title: 'Electric Field Lines', duration: '45m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: Electric Field Lines</h3><p>Imaginary lines used to visualize the direction and strength of an electric field.</p>' }
       ]
     },
     {
@@ -1055,21 +1038,13 @@ nav {
       categoryId: 'neet',
       title: 'NEET Biology: Genetics (Inheritance)',
       description: 'Principles of Inheritance and Variation.',
-      thumbnail: 'https://picsum.photos/seed/genetics_inheritance/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80',
       instructor: 'Dr. Samapti Mam',
       level: 'Intermediate',
       duration: '35 Hours',
       lectures: [
-        { 
-          id: 'neet-b3-l1', 
-          courseId: 'neet-b3', 
-          title: 'Mendelian Genetics', 
-          videoUrl: 'https://www.youtube.com/embed/9O59rkM_6p8', 
-          duration: '60m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Mendelian Genetics</h3><p>Mendel\'s laws of inheritance include the Law of Dominance, Law of Segregation, and Law of Independent Assortment.</p>'
-        },
-        { id: 'neet-b3-l2', courseId: 'neet-b3', title: 'DNA Structure', videoUrl: 'https://www.youtube.com/embed/8kK2zwjRV0M', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: DNA Structure</h3><p>DNA is a double helix structure composed of nucleotides.</p>' }
+        { id: 'neet-b3-l1', courseId: 'neet-b3', title: 'Mendelian Genetics', duration: '60m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Mendelian Genetics</h3><p>Mendel\'s laws of inheritance include the Law of Dominance, Law of Segregation, and Law of Independent Assortment.</p>' },
+        { id: 'neet-b3-l2', courseId: 'neet-b3', title: 'DNA Structure', duration: '55m', order: 2, content: '<h3 class="text-xl font-bold mb-4">Theory: DNA Structure</h3><p>DNA is a double helix structure composed of nucleotides.</p>' }
       ]
     },
     {
@@ -1077,12 +1052,12 @@ nav {
       categoryId: 'class10',
       title: 'Class 10 Science: Life Processes',
       description: 'Detailed study of Nutrition, Respiration, Transportation, and Excretion.',
-      thumbnail: 'https://picsum.photos/seed/lifeprocesses/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sunil Sir',
       level: 'Beginner',
       duration: '20 Hours',
       lectures: [
-        { id: 'class10-s2-l1', courseId: 'class10-s2', title: 'Nutrition in Plants', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '40m', order: 1 }
+        { id: 'class10-s2-l1', courseId: 'class10-s2', title: 'Nutrition in Plants', duration: '40m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Nutrition in Plants</h3><p>How plants prepare their own food through photosynthesis.</p>' }
       ]
     },
     {
@@ -1090,12 +1065,12 @@ nav {
       categoryId: 'class12',
       title: 'Class 12 Chemistry: Organic Chemistry',
       description: 'Haloalkanes and Haloarenes, Alcohols, Phenols and Ethers.',
-      thumbnail: 'https://picsum.photos/seed/organic_c12/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&w=800&q=80',
       instructor: 'Bharat Panchal',
       level: 'Intermediate',
       duration: '50 Hours',
       lectures: [
-        { id: 'class12-c2-l1', courseId: 'class12-c2', title: 'Introduction to Organic', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '45m', order: 1 }
+        { id: 'class12-c2-l1', courseId: 'class12-c2', title: 'Introduction to Organic', duration: '45m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Introduction to Organic</h3><p>Basic principles and techniques of organic chemistry.</p>' }
       ]
     },
     {
@@ -1103,12 +1078,12 @@ nav {
       categoryId: 'skills',
       title: 'Generative AI for Everyone',
       description: 'Learn how to use AI tools like ChatGPT, Midjourney, and more.',
-      thumbnail: 'https://picsum.photos/seed/genai_skill/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80',
       instructor: 'Andrew Ng',
       level: 'Beginner',
       duration: '10 Hours',
       lectures: [
-        { id: 'skill-ai1-l1', courseId: 'skill-ai1', title: 'What is GenAI?', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', duration: '15m', order: 1 }
+        { id: 'skill-ai1-l1', courseId: 'skill-ai1', title: 'What is GenAI?', duration: '15m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: What is GenAI?</h3><p>Generative AI refers to artificial intelligence that can generate new content, such as text, images, or other media.</p>' }
       ]
     },
     {
@@ -1116,20 +1091,12 @@ nav {
       categoryId: 'jee',
       title: 'JEE Maths: Calculus (Limits & Continuity)',
       description: 'Limits, Continuity, and Differentiability for JEE.',
-      thumbnail: 'https://picsum.photos/seed/calculus_jee/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80',
       instructor: 'NV Sir',
       level: 'Advanced',
       duration: '60 Hours',
       lectures: [
-        { 
-          id: 'jee-m2-l1', 
-          courseId: 'jee-m2', 
-          title: 'Introduction to Limits', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
-          duration: '50m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Limits</h3><p>The value that a function approaches as the input approaches some value.</p>'
-        }
+        { id: 'jee-m2-l1', courseId: 'jee-m2', title: 'Introduction to Limits', duration: '50m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Limits</h3><p>The value that a function approaches as the input approaches some value.</p>' }
       ]
     },
     {
@@ -1137,20 +1104,12 @@ nav {
       categoryId: 'neet',
       title: 'NEET Chemistry: Organic (GOC)',
       description: 'General Organic Chemistry (GOC) for NEET.',
-      thumbnail: 'https://picsum.photos/seed/chemistry_neet/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&w=800&q=80',
       instructor: 'Pankaj Sir',
       level: 'Intermediate',
       duration: '40 Hours',
       lectures: [
-        { 
-          id: 'neet-c2-l1', 
-          courseId: 'neet-c2', 
-          title: 'Inductive Effect', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
-          duration: '45m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Inductive Effect</h3><p>Permanent displacement of sigma electrons along a saturated carbon chain.</p>'
-        }
+        { id: 'neet-c2-l1', courseId: 'neet-c2', title: 'Inductive Effect', duration: '45m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Inductive Effect</h3><p>Permanent displacement of sigma electrons along a saturated carbon chain.</p>' }
       ]
     },
     {
@@ -1158,20 +1117,12 @@ nav {
       categoryId: 'class10',
       title: 'Class 10 Maths: Trigonometry Basics',
       description: 'Introduction to Trigonometric Ratios and Identities.',
-      thumbnail: 'https://picsum.photos/seed/trig_basics/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80',
       instructor: 'Dear Sir',
       level: 'Beginner',
       duration: '15 Hours',
       lectures: [
-        { 
-          id: 'class10-m1-l1', 
-          courseId: 'class10-m1', 
-          title: 'Trigonometry Basics', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
-          duration: '30m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: Trigonometry</h3><p>Study of relationships between side lengths and angles of triangles.</p>'
-        }
+        { id: 'class10-m1-l1', courseId: 'class10-m1', title: 'Trigonometry Basics', duration: '30m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: Trigonometry</h3><p>Study of relationships between side lengths and angles of triangles.</p>' }
       ]
     },
     {
@@ -1179,20 +1130,12 @@ nav {
       categoryId: 'jee',
       title: 'JEE Chemistry: Chemical Bonding (Advanced)',
       description: 'Master VSEPR Theory, Hybridization, and Molecular Orbital Theory.',
-      thumbnail: 'https://picsum.photos/seed/bonding_adv/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1532187643603-ba119ca4109e?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sachin Sir',
       level: 'Advanced',
       duration: '40 Hours',
       lectures: [
-        { 
-          id: 'jee-c2-l1', 
-          courseId: 'jee-c2', 
-          title: 'VSEPR Theory', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
-          duration: '50m', 
-          order: 1,
-          content: '<h3 class="text-xl font-bold mb-4">Theory: VSEPR Theory</h3><p>Valence Shell Electron Pair Repulsion theory is used to predict the geometry of individual molecules.</p>'
-        }
+        { id: 'jee-c2-l1', courseId: 'jee-c2', title: 'VSEPR Theory', duration: '50m', order: 1, content: '<h3 class="text-xl font-bold mb-4">Theory: VSEPR Theory</h3><p>Valence Shell Electron Pair Repulsion theory is used to predict the geometry of individual molecules.</p>' }
       ]
     },
     {
@@ -1200,7 +1143,7 @@ nav {
       categoryId: 'class12',
       title: 'Class 12 Physics: Optics & Waves',
       description: 'Ray Optics and Wave Optics for Board Exams.',
-      thumbnail: 'https://picsum.photos/seed/optics_waves/800/600',
+      thumbnail: 'https://images.unsplash.com/photo-1514373941175-0a141072bbc8?auto=format&fit=crop&w=800&q=80',
       instructor: 'Abhishek Sahu',
       level: 'Intermediate',
       duration: '30 Hours',
@@ -1209,7 +1152,6 @@ nav {
           id: 'class12-p1-l1', 
           courseId: 'class12-p1', 
           title: 'Reflection of Light', 
-          videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', 
           duration: '40m', 
           order: 1,
           content: '<h3 class="text-xl font-bold mb-4">Theory: Reflection</h3><p>Reflection of light from spherical mirrors and its applications.</p>'
@@ -1219,6 +1161,21 @@ nav {
   ];
 
   let userProgress: any[] = [];
+
+  app.get("/api/user", (req, res) => {
+    try {
+      res.json({
+        name: "Adhyaan Sirohi",
+        email: "sirohiadhyaan@gmail.com",
+        role: "Verified Citizen",
+        joinDate: "Jan 2024",
+        avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Adhyaan",
+        bio: "Urban planning enthusiast and active contributor to Delhi's smart city initiatives. Focused on improving local waste management and road infrastructure."
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch user profile" });
+    }
+  });
 
   app.get("/api/learning/categories", (req, res) => {
     try {
@@ -1293,15 +1250,22 @@ nav {
         { type: 'Dust Storm', severity: 'medium', message: 'Strong winds likely. Secure polyhouses and young saplings.', time: 'Expected in 4h' },
       ];
 
+      // Randomize values slightly to simulate live feed
+      const baseTemp = 38;
+      const tempVar = (Math.random() * 4 - 2).toFixed(1);
+      const baseAqi = 240;
+      const aqiVar = Math.floor(Math.random() * 40 - 20);
+      const currentAqi = baseAqi + aqiVar;
+
       const liveWeather = {
-        temp: '38°C',
-        condition: 'Sunny',
-        humidity: '24%',
-        windSpeed: '12 km/h',
-        aqi: 245,
-        aqiStatus: 'Poor',
-        aqiColor: 'text-orange-500',
-        visibility: '3.5 km',
+        temp: `${(baseTemp + parseFloat(tempVar)).toFixed(1)}°C`,
+        condition: currentAqi > 250 ? 'Hazy' : 'Sunny',
+        humidity: `${Math.floor(Math.random() * 10 + 20)}%`,
+        windSpeed: `${Math.floor(Math.random() * 5 + 10)} km/h`,
+        aqi: currentAqi,
+        aqiStatus: currentAqi > 300 ? 'Hazardous' : currentAqi > 200 ? 'Poor' : 'Moderate',
+        aqiColor: currentAqi > 300 ? 'text-red-500' : currentAqi > 200 ? 'text-orange-500' : 'text-yellow-500',
+        visibility: `${(Math.random() * 2 + 2).toFixed(1)} km`,
         uvIndex: 'High (9)'
       };
 

@@ -13,6 +13,7 @@ export interface CityEvent {
   tags: string[];
   registrationUrl?: string;
   isFree: boolean;
+  isLive?: boolean;
   coordinates?: { lat: number; lng: number };
 }
 
@@ -40,10 +41,9 @@ export interface Lecture {
   id: string;
   courseId: string;
   title: string;
-  videoUrl: string;
   duration: string;
   order: number;
-  content?: string;
+  content: string;
 }
 
 export interface UserProgress {

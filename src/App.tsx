@@ -155,25 +155,79 @@ const NotificationsDropdown = ({ notifications, onClose, onTrack }: { notificati
   );
 };
 
+const LiveQueueTracker = () => {
+  const [queues, setQueues] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchQueues = async () => {
+      try {
+        const locations = ['Karol Bagh', 'Connaught Place', 'Dwarka Sector 12', 'Rohini Sector 3'];
+        const results = await Promise.all(locations.map(async (loc) => {
+          const res = await fetch(`/api/queue-status?location=${encodeURIComponent(loc)}`);
+          return res.json();
+        }));
+        setQueues(results);
+      } catch (err) {
+        console.error("Failed to fetch queues", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchQueues();
+    const interval = setInterval(fetchQueues, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isLoading) return <div className="h-40 flex items-center justify-center"><div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" /></div>;
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {queues.map((q, i) => (
+        <div key={i} className="glass-card p-6 rounded-[2rem] space-y-4 group hover:border-blue-200 transition-all">
+          <div className="flex items-center justify-between">
+            <div className="label-caps !text-[8px] !text-slate-400">{q.location}</div>
+            <div className={cn(
+              "w-2 h-2 rounded-full animate-pulse",
+              q.load === 'High' ? "bg-red-500" : q.load === 'Medium' ? "bg-amber-500" : "bg-emerald-500"
+            )} />
+          </div>
+          <div>
+            <div className="text-2xl font-black text-slate-900 tracking-tighter">{q.waitTime}</div>
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Est. Wait Time</div>
+          </div>
+          <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Current Load</span>
+            <span className={cn(
+              "text-[10px] font-black uppercase tracking-widest",
+              q.load === 'High' ? "text-red-600" : q.load === 'Medium' ? "text-amber-600" : "text-emerald-600"
+            )}>{q.load}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const SmartCitySlideshow = () => {
   const images = [
     {
-      url: "https://picsum.photos/seed/infrastructure/1200/800",
+      url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80",
       title: "Digital Infrastructure",
       desc: "Real-time monitoring of city assets and infrastructure health."
     },
     {
-      url: "https://picsum.photos/seed/transport/1200/800",
+      url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
       title: "Sustainable Transport",
       desc: "Optimizing multi-modal urban mobility for a greener Delhi."
     },
     {
-      url: "https://picsum.photos/seed/governance/1200/800",
+      url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
       title: "Smart Governance",
       desc: "AI-driven civic resolution systems for faster response times."
     },
     {
-      url: "https://picsum.photos/seed/resilience/1200/800",
+      url: "https://images.unsplash.com/photo-1597041066672-442d61028f44?auto=format&fit=crop&w=1200&q=80",
       title: "Urban Resilience",
       desc: "Predictive maintenance and resource optimization for city services."
     }
@@ -263,22 +317,22 @@ const SmartCitySlideshow = () => {
 const ComplaintSlideshow = () => {
   const images = [
     {
-      url: "https://picsum.photos/seed/road/1200/800",
+      url: "https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=1200&q=80",
       title: "Road Maintenance",
       desc: "AI detection of potholes and road surface damage for rapid repair."
     },
     {
-      url: "https://picsum.photos/seed/waste/1200/800",
+      url: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1200&q=80",
       title: "Waste Management",
       desc: "Identifying overflowing bins and illegal dumping in real-time."
     },
     {
-      url: "https://picsum.photos/seed/infrastructure_public/1200/800",
+      url: "https://images.unsplash.com/photo-1516646255117-f9f933680173?auto=format&fit=crop&w=1200&q=80",
       title: "Public Infrastructure",
       desc: "Monitoring structural health and reporting public asset damage."
     },
     {
-      url: "https://picsum.photos/seed/utility/1200/800",
+      url: "https://images.unsplash.com/photo-1581094288338-2314dddb7ec3?auto=format&fit=crop&w=1200&q=80",
       title: "Utility Services",
       desc: "Reporting water leaks and electrical hazards for immediate attention."
     }
@@ -368,22 +422,22 @@ const ComplaintSlideshow = () => {
 const TransportSlideshow = () => {
   const images = [
     {
-      url: "https://picsum.photos/seed/metro/1200/800",
+      url: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80",
       title: "Delhi Metro Network",
       desc: "The backbone of Delhi's urban mobility, serving millions daily."
     },
     {
-      url: "https://picsum.photos/seed/bus/1200/800",
+      url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
       title: "Smart Bus Transit",
       desc: "Optimized bus routes with real-time tracking and occupancy data."
     },
     {
-      url: "https://picsum.photos/seed/rickshaw/1200/800",
+      url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
       title: "Last Mile Connectivity",
       desc: "Integrating e-rickshaws and cycles for seamless end-to-end travel."
     },
     {
-      url: "https://picsum.photos/seed/traffic/1200/800",
+      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
       title: "Traffic Intelligence",
       desc: "AI-powered traffic management to reduce congestion and emissions."
     }
@@ -473,22 +527,22 @@ const TransportSlideshow = () => {
 const AgricultureSlideshow = () => {
   const images = [
     {
-      url: "https://picsum.photos/seed/farming/1200/800",
+      url: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=1200&q=80",
       title: "Precision Farming",
       desc: "AI-driven crop health monitoring and yield prediction for farmers."
     },
     {
-      url: "https://picsum.photos/seed/irrigation/1200/800",
+      url: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&w=1200&q=80",
       title: "Smart Irrigation",
       desc: "Optimizing water usage through real-time soil moisture sensing."
     },
     {
-      url: "https://picsum.photos/seed/mandi/1200/800",
+      url: "https://images.unsplash.com/photo-1488459711615-de64ef5996f6?auto=format&fit=crop&w=1200&q=80",
       title: "Market Intelligence",
       desc: "Real-time mandi prices and demand forecasting for better profits."
     },
     {
-      url: "https://picsum.photos/seed/rural/1200/800",
+      url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
       title: "Rural Connectivity",
       desc: "Bridging the digital divide with localized services and advisory."
     }
@@ -580,10 +634,12 @@ const UserDashboard = ({ complaints, notifications, user, onUpdateUser }: { comp
   const [editForm, setEditForm] = useState({ ...user });
 
   const avatarOptions = [
-    'Adhyaan', 'Felix', 'Aneka', 'Milo', 'Lilly', 
-    'Toby', 'Sasha', 'Oliver', 'Luna', 'Jasper', 
-    'Bella', 'Leo', 'Daisy', 'Max', 'Coco', 
-    'Rocky', 'Ruby', 'Simba', 'Nala', 'Zoe'
+    // Boys
+    'Adrian', 'Caleb', 'Dustin', 'Ethan', 'Felix', 
+    'George', 'Henry', 'Ian', 'Jack', 'Kevin',
+    // Girls
+    'Alyssa', 'Britney', 'Chloe', 'Destiny', 'Emma', 
+    'Faith', 'Grace', 'Heidi', 'Isabelle', 'Jasmine'
   ];
 
   const handleSave = () => {
@@ -594,8 +650,8 @@ const UserDashboard = ({ complaints, notifications, user, onUpdateUser }: { comp
   const stats = [
     { label: 'Complaints Filed', value: complaints.length, icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-50' },
     { label: 'Resolved Issues', value: complaints.filter(c => c.status === 'resolved').length, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    { label: 'Learning Hours', value: '42h', icon: GraduationCap, color: 'text-purple-600', bg: 'bg-purple-50' },
-    { label: 'Community Rank', value: '#124', icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { label: 'Learning Hours', value: (12 + Math.floor(Math.random() * 5)) + 'h', icon: GraduationCap, color: 'text-purple-600', bg: 'bg-purple-50' },
+    { label: 'Community Rank', value: '#' + (120 + Math.floor(Math.random() * 10)), icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
   ];
 
   return (
@@ -652,7 +708,7 @@ const UserDashboard = ({ complaints, notifications, user, onUpdateUser }: { comp
                   </div>
                   <div className="grid grid-cols-5 gap-4">
                     {avatarOptions.map((seed) => {
-                      const url = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+                      const url = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}`;
                       const isSelected = editForm.avatar === url;
                       return (
                         <button
@@ -963,7 +1019,7 @@ const EventsSection = ({ events }: { events: CityEvent[] }) => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute top-4 left-4">
+                <div className="absolute top-4 left-4 flex gap-2">
                   <span className={cn(
                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm backdrop-blur-md",
                     event.category === 'hackathon' ? "bg-purple-500/90 text-white" :
@@ -972,6 +1028,12 @@ const EventsSection = ({ events }: { events: CityEvent[] }) => {
                   )}>
                     {event.category}
                   </span>
+                  {event.isLive && (
+                    <span className="px-3 py-1 bg-red-500/90 text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm backdrop-blur-md flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                      Live
+                    </span>
+                  )}
                 </div>
                 {event.isFree && (
                   <div className="absolute top-4 right-4">
@@ -1007,12 +1069,6 @@ const EventsSection = ({ events }: { events: CityEvent[] }) => {
                   ))}
                 </div>
 
-                <div className="pt-4 mt-auto">
-                  <button className="w-full py-3 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
-                    Register Now
-                    <ExternalLink size={16} />
-                  </button>
-                </div>
               </div>
             </motion.div>
           ))}
@@ -1029,7 +1085,7 @@ export default function App() {
     email: "sirohiadhyaan@gmail.com",
     role: "Verified Citizen",
     joinDate: "Jan 2024",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Adhyaan",
+    avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Adhyaan",
     bio: "Urban planning enthusiast and active contributor to Delhi's smart city initiatives. Focused on improving local waste management and road infrastructure."
   });
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -1340,6 +1396,19 @@ export default function App() {
   });
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('/api/user');
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch user", err);
+      }
+    };
+
+    fetchUser();
     fetchComplaints();
     fetchNotifications();
     fetchAgriData();
@@ -1473,8 +1542,8 @@ export default function App() {
   const stats = [
     { label: 'Active Issues', value: complaints.filter(c => c.status !== 'resolved').length.toString(), icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-50' },
     { label: 'Resolved Today', value: complaints.filter(c => c.status === 'resolved').length.toString(), icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-    { label: 'Avg. Response', value: '4.2h', icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50' },
-    { label: 'AI Accuracy', value: '94%', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-50' },
+    { label: 'Avg. Response', value: (3.5 + Math.random()).toFixed(1) + 'h', icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50' },
+    { label: 'AI Accuracy', value: (94 + Math.random() * 2).toFixed(1) + '%', icon: Zap, color: 'text-amber-500', bg: 'bg-amber-50' },
   ];
 
   return (
@@ -1611,44 +1680,26 @@ export default function App() {
                   </div>
                   <div className="glass-card p-6 rounded-[2rem] bg-gradient-to-br from-blue-600 to-indigo-700 text-white border-none shadow-2xl shadow-blue-200">
                     <h4 className="font-black text-sm mb-2 uppercase tracking-widest">AI Priority Engine</h4>
-                    <p className="text-xs text-blue-100/80 leading-relaxed mb-4">Our scoring algorithm ensures critical issues are resolved within 4 hours.</p>
+                    <p className="text-xs text-blue-100/80 leading-relaxed mb-4">
+                      NagarAI's Priority Engine uses machine learning to automatically rank civic complaints. By analyzing the severity of the issue, its category (like road safety or sanitation), and the population density of the location, it ensures that critical problems are addressed by city officials within a 4-hour window.
+                    </p>
                     <div className="flex items-center justify-between text-[10px] font-mono bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/10">
                       <span className="opacity-80">SCORE = S*0.4 + C*0.3 + L*0.2</span>
                       <ChevronRight size={12} />
                     </div>
                   </div>
 
-                  {/* Quick Weather/AQI Summary */}
-                  <div className="glass-card p-6 rounded-[2rem] bg-slate-900 text-white border-none shadow-2xl shadow-slate-200">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="label-caps !text-slate-400">Live Environment</span>
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="text-4xl font-black tracking-tighter">{agriData?.liveWeather?.temp || '38°C'}</div>
-                        <div className="text-slate-400">
-                          <Sun size={24} />
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className={cn("text-lg font-black tracking-tighter", agriData?.liveWeather?.aqiColor || 'text-orange-400')}>
-                          AQI {agriData?.liveWeather?.aqi || '245'}
-                        </div>
-                        <div className="label-caps !text-[8px] !text-slate-500">
-                          {agriData?.liveWeather?.aqiStatus || 'Poor Quality'}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </section>
 
               {/* Module Previews */}
-              <section className="grid md:grid-cols-2 gap-8">
+              <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
                   { title: 'Civic Complaints', desc: 'Photo-to-resolution in seconds using AI Vision.', icon: Camera, color: 'text-red-600', bg: 'bg-red-50', tab: 'complaints' as Tab },
                   { title: 'Route Optimizer', desc: 'Multi-modal transport scoring for Delhi journeys.', icon: Navigation, color: 'text-blue-600', bg: 'bg-blue-50', tab: 'transport' as Tab },
+                  { title: 'Agri-Tech', desc: 'AI-powered crop advice and real-time market rates.', icon: Sprout, color: 'text-emerald-600', bg: 'bg-emerald-50', tab: 'agriculture' as Tab },
+                  { title: 'Skill Portal', desc: 'Master new skills with expert-led study modules.', icon: GraduationCap, color: 'text-purple-600', bg: 'bg-purple-50', tab: 'skills' as Tab },
+                  { title: 'City Events', desc: 'Discover and participate in local community events.', icon: Calendar, color: 'text-amber-600', bg: 'bg-amber-50', tab: 'events' as Tab },
                 ].map((module, i) => (
                   <button 
                     key={i}
@@ -1671,6 +1722,23 @@ export default function App() {
                     </div>
                   </button>
                 ))}
+              </section>
+
+              {/* Live City Services Section */}
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-display font-black text-slate-900 flex items-center gap-3 uppercase tracking-tight">
+                    <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                      <Activity size={20} />
+                    </div>
+                    Live City Services
+                  </h3>
+                  <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100">
+                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                    Real-time Status
+                  </div>
+                </div>
+                <LiveQueueTracker />
               </section>
             </motion.div>
           )}
@@ -2510,7 +2578,7 @@ export default function App() {
                 <div className="space-y-4">
                   <div className="label-caps">Learning & Growth</div>
                   <h2 className="font-display text-5xl font-black text-slate-900 tracking-tighter leading-none">Skill Development <br/><span className="text-blue-600">Portal</span></h2>
-                  <p className="text-lg text-slate-600 max-w-xl leading-relaxed font-medium">Master new skills with expert-led video courses and certification.</p>
+                  <p className="text-lg text-slate-600 max-w-xl leading-relaxed font-medium">Master new skills with expert-led study modules and certification.</p>
                 </div>
                 <div className="flex items-center gap-6 bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40">
                   <div className="text-right">
@@ -2521,7 +2589,7 @@ export default function App() {
                     {[1, 2, 3, 4].map(i => (
                       <img 
                         key={i}
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i * 99}`}
+                        src={`https://api.dicebear.com/7.x/personas/svg?seed=${i * 99}`}
                         alt="User"
                         referrerPolicy="no-referrer"
                         className="w-12 h-12 rounded-full border-4 border-white shadow-lg"

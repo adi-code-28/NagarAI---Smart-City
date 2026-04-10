@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, 
   Filter, 
-  Play, 
   BookOpen, 
   GraduationCap, 
   Award, 
@@ -34,7 +33,6 @@ export const SkillPortal = () => {
 
   const [showRequirements, setShowRequirements] = React.useState(false);
   const [selectedLevel, setSelectedLevel] = React.useState<string | null>(null);
-  const [activeTab, setActiveTab] = React.useState<'video' | 'notes'>('video');
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +43,10 @@ export const SkillPortal = () => {
           fetch('/api/learning/progress')
         ]);
         
+        if (!catRes.ok || !courseRes.ok || !progRes.ok) {
+          throw new Error('One or more requests failed');
+        }
+
         const [catData, courseData, progData] = await Promise.all([
           catRes.json(),
           courseRes.json(),
@@ -140,66 +142,24 @@ export const SkillPortal = () => {
           {/* Content Section */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100 flex flex-col">
-              {/* Tab Switcher */}
-              <div className="flex border-b border-slate-100 p-3 gap-3 bg-slate-50/50">
-                <button 
-                  onClick={() => setActiveTab('video')}
-                  className={cn(
-                    "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3",
-                    activeTab === 'video' ? "bg-white text-blue-600 shadow-sm border border-slate-200/50" : "text-slate-500 hover:bg-white/50"
-                  )}
-                >
-                  <Play size={14} className={activeTab === 'video' ? "fill-blue-600" : ""} />
-                  Video Lecture
-                </button>
-                <button 
-                  onClick={() => setActiveTab('notes')}
-                  className={cn(
-                    "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3",
-                    activeTab === 'notes' ? "bg-white text-blue-600 shadow-sm border border-slate-200/50" : "text-slate-500 hover:bg-white/50"
-                  )}
-                >
-                  <BookOpen size={14} />
-                  Study Notes
-                </button>
-              </div>
-
-              <div className="aspect-video bg-slate-950 relative group">
-                {activeTab === 'video' ? (
-                  activeLecture ? (
-                    <iframe
-                      src={activeLecture.videoUrl}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+              <div className="aspect-video bg-white relative group">
+                <div className="w-full h-full overflow-y-auto p-12 custom-scrollbar">
+                  {activeLecture ? (
+                    <div className="prose prose-slate max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:leading-relaxed prose-p:text-slate-600">
+                      <div dangerouslySetInnerHTML={{ __html: activeLecture.content }} />
+                    </div>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center text-white space-y-6">
-                      <div className="w-24 h-24 bg-blue-600/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 animate-pulse">
-                        <Play size={48} className="text-blue-500 fill-blue-500" />
+                    <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-6">
+                      <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center">
+                        <BookOpen size={40} className="opacity-20" />
                       </div>
                       <div className="text-center space-y-2">
-                        <p className="font-black text-xl tracking-tight">Ready to start?</p>
-                        <p className="text-sm text-slate-500 font-medium">Select a lecture from the list to begin</p>
+                        <p className="font-black text-xl tracking-tight text-slate-900">Ready to start?</p>
+                        <p className="text-sm text-slate-500 font-medium">Select a topic from the list to begin reading</p>
                       </div>
                     </div>
-                  )
-                ) : (
-                  <div className="w-full h-full bg-white overflow-y-auto p-12 custom-scrollbar">
-                    {activeLecture?.content ? (
-                      <div className="prose prose-slate max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:leading-relaxed prose-p:text-slate-600">
-                        <div dangerouslySetInnerHTML={{ __html: activeLecture.content }} />
-                      </div>
-                    ) : (
-                      <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-6">
-                        <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center">
-                          <BookOpen size={40} className="opacity-20" />
-                        </div>
-                        <p className="font-black text-lg tracking-tight">No notes available yet.</p>
-                      </div>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
 
@@ -315,7 +275,7 @@ export const SkillPortal = () => {
                             <div className="w-1 h-3 bg-blue-600 rounded-full animate-[bounce_1s_infinite_0.2s]" />
                             <div className="w-1 h-3 bg-blue-600 rounded-full animate-[bounce_1s_infinite_0.3s]" />
                           </div>
-                          Now Playing
+                          Currently Reading
                         </div>
                       )}
                     </div>
@@ -332,7 +292,7 @@ export const SkillPortal = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="text-xl font-black tracking-tight">Earn Certification</h4>
-                <p className="text-sm text-blue-100/80 leading-relaxed">Complete all lectures and pass the final assessment to receive your verified certificate.</p>
+                <p className="text-sm text-blue-100/80 leading-relaxed">Complete all topics and pass the final assessment to receive your verified certificate.</p>
               </div>
               <button 
                 onClick={() => setShowRequirements(true)}
@@ -371,7 +331,7 @@ export const SkillPortal = () => {
                   </div>
                   <ul className="space-y-4">
                     {[
-                      'Complete 100% of the video lectures',
+                      'Complete 100% of the study modules',
                       'Pass the final assessment with at least 80%',
                       'Submit all required course assignments',
                       'Maintain an active learning streak'
@@ -405,7 +365,7 @@ export const SkillPortal = () => {
       {!selectedCategory && !searchQuery && (
         <div className="relative h-80 md:h-[450px] rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-100 group">
           <img 
-            src="https://picsum.photos/seed/learning_path/1200/800" 
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" 
             alt="Featured"
             referrerPolicy="no-referrer"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -434,7 +394,7 @@ export const SkillPortal = () => {
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map(i => (
                   <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 overflow-hidden bg-slate-800">
-                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i * 123}`} alt="User" referrerPolicy="no-referrer" />
+                    <img src={`https://api.dicebear.com/7.x/personas/svg?seed=${i * 123}`} alt="User" referrerPolicy="no-referrer" />
                   </div>
                 ))}
                 <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-black text-white">
@@ -669,7 +629,7 @@ export const SkillPortal = () => {
                       whileTap={{ scale: 0.9 }}
                       className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-600 shadow-2xl"
                     >
-                      <Play size={28} className="fill-blue-600 ml-1" />
+                      <BookOpen size={28} className="text-blue-600" />
                     </motion.div>
                   </div>
                 </div>
