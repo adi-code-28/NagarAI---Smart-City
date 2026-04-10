@@ -14,7 +14,9 @@ import {
   Zap,
   Activity,
   Book,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck,
+  TrendingUp
 } from 'lucide-react';
 import { Category, Course, Lecture, UserProgress } from '../types';
 
@@ -80,6 +82,9 @@ export const SkillPortal = () => {
       case 'Activity': return <Activity size={20} />;
       case 'BookOpen': return <BookOpen size={20} />;
       case 'Zap': return <Zap size={20} />;
+      case 'ShieldCheck': return <ShieldCheck size={20} />;
+      case 'TrendingUp': return <TrendingUp size={20} />;
+      case 'BarChart3': return <BarChart3 size={20} />;
       default: return <Book size={20} />;
     }
   };
