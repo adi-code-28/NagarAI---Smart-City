@@ -90,7 +90,7 @@ async function startServer() {
       location: 'Vigyan Bhawan, Delhi',
       description: 'Live discussion on the future of transport in Delhi with urban planners and AI experts.',
       organizer: 'Ministry of Urban Development',
-      image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1594142461625-0749032608d4?auto=format&fit=crop&w=800&q=80',
       tags: ['Live', 'Transport', 'AI'],
       isFree: true,
       isLive: true
@@ -104,7 +104,7 @@ async function startServer() {
       location: 'IIT Delhi, Hauz Khas',
       description: 'A 48-hour hackathon to solve urban challenges using AI and IoT. Win prizes up to ₹5 Lakhs.',
       organizer: 'Delhi Government & IIT Delhi',
-      image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
       tags: ['AI', 'Smart City', 'Innovation'],
       isFree: true,
       registrationUrl: 'https://example.com/hackathon'
@@ -118,7 +118,7 @@ async function startServer() {
       location: 'Dilli Haat, INA',
       description: 'Experience the rich heritage of India through folk dance, music, and crafts from across the country.',
       organizer: 'Delhi Tourism',
-      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1582560475093-ba66accbc424?auto=format&fit=crop&w=800&q=80',
       tags: ['Culture', 'Music', 'Heritage'],
       isFree: false
     },
@@ -131,7 +131,7 @@ async function startServer() {
       location: 'Cyber Hub, Gurgaon',
       description: 'Join the leading developers in the city to discuss the future of Web3 and decentralized applications.',
       organizer: 'TechDelhi Community',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80',
       tags: ['Web3', 'Blockchain', 'Networking'],
       isFree: true
     },
@@ -144,7 +144,7 @@ async function startServer() {
       location: 'India Habitat Centre, Lodhi Road',
       description: 'A workshop focused on using technology for social good and community development.',
       organizer: 'NagarAI Foundation',
-      image: 'https://images.unsplash.com/photo-1597041066672-442d61028f44?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
       tags: ['Social Good', 'Workshop', 'Community'],
       isFree: true
     },
@@ -157,7 +157,7 @@ async function startServer() {
       location: 'The Piano Man, Safdarjung',
       description: 'An evening of soulful jazz performances by international artists.',
       organizer: 'The Piano Man Jazz Club',
-      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1514525253361-bee8718a300c?auto=format&fit=crop&w=800&q=80',
       tags: ['Jazz', 'Music', 'Nightlife'],
       isFree: false
     },
@@ -209,7 +209,7 @@ async function startServer() {
       location: 'Pragati Maidan, New Delhi',
       description: 'The biggest gathering of entrepreneurs, investors, and policy makers in the capital.',
       organizer: 'Ministry of Commerce & Industry',
-      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80',
       tags: ['Startup', 'Business', 'Economy'],
       isFree: true
     },
@@ -399,12 +399,12 @@ async function startServer() {
 
   // Learning Portal Data
   const categories = [
-    { id: 'jee', title: 'JEE Preparation', description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.', thumbnail: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80', icon: 'GraduationCap' },
-    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80', icon: 'Activity' },
+    { id: 'jee', title: 'JEE Preparation', description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.', thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80', icon: 'GraduationCap' },
+    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=800&q=80', icon: 'Activity' },
     { id: 'class10', title: 'Class 10 Boards', description: 'Complete syllabus coverage for Class 10 Board exams.', thumbnail: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80', icon: 'BookOpen' },
     { id: 'class12', title: 'Class 12 Boards', description: 'In-depth preparation for Class 12 Board exams and competitive basics.', thumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80', icon: 'Book' },
     { id: 'skills', title: 'Skill Development', description: 'Learn Coding, AI, Communication, and more for the future.', thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80', icon: 'Zap' },
-    { id: 'upsc', title: 'UPSC Civil Services', description: 'Comprehensive preparation for IAS, IPS, and other civil services.', thumbnail: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=800&q=80', icon: 'ShieldCheck' },
+    { id: 'upsc', title: 'UPSC Civil Services', description: 'Comprehensive preparation for IAS, IPS, and other civil services.', thumbnail: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80', icon: 'ShieldCheck' },
     { id: 'finance', title: 'Financial Literacy', description: 'Master Personal Finance, Stock Markets, and Wealth Management.', thumbnail: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80', icon: 'TrendingUp' },
     { id: 'marketing', title: 'Digital Marketing', description: 'Learn SEO, SEM, Social Media, and Content Strategy.', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', icon: 'BarChart3' },
     { id: 'cyber', title: 'Cyber Security', description: 'Protect digital assets with Ethical Hacking and Network Security.', thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80', icon: 'ShieldCheck' }
@@ -417,7 +417,7 @@ async function startServer() {
       categoryId: 'jee',
       title: 'JEE Physics: Mechanics Masterclass',
       description: 'Comprehensive coverage of Mechanics for JEE Main & Advanced. From Kinematics to Rotational Dynamics.',
-      thumbnail: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80',
       instructor: 'Alakh Pandey (PW)',
       level: 'Advanced',
       duration: '45 Hours',
@@ -1425,7 +1425,7 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Science: Chemical Reactions',
       description: 'Understand the core concepts of chemical reactions and equations.',
-      thumbnail: 'https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1603126727585-6d5171d2c201?auto=format&fit=crop&w=800&q=80',
       instructor: 'Rakshita Mam (PW)',
       level: 'Beginner',
       duration: '28 Hours',
@@ -1523,7 +1523,7 @@ async function startServer() {
       categoryId: 'class10',
       title: 'Class 10 Maths: Trigonometry',
       description: 'Master the basics and applications of Trigonometry for Boards.',
-      thumbnail: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=80',
+      thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80',
       instructor: 'Sunil Sir (PW)',
       level: 'Beginner',
       duration: '20 Hours',

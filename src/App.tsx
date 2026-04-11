@@ -162,7 +162,7 @@ const LiveQueueTracker = () => {
   useEffect(() => {
     const fetchQueues = async () => {
       try {
-        const locations = ['Karol Bagh', 'Connaught Place', 'Dwarka Sector 12', 'Rohini Sector 3'];
+        const locations = ['AIIMS Delhi', 'Safdarjung Hospital', 'Passport Seva Kendra', 'RTO Janakpuri'];
         const results = await Promise.all(locations.map(async (loc) => {
           const res = await fetch(`/api/queue-status?location=${encodeURIComponent(loc)}`);
           return res.json();
@@ -212,13 +212,13 @@ const LiveQueueTracker = () => {
 const SmartCitySlideshow = () => {
   const images = [
     {
-      url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1200&q=80",
       title: "Digital Infrastructure",
       desc: "Real-time monitoring of city assets and infrastructure health."
     },
     {
-      url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-      title: "Sustainable Transport",
+      url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
+      title: "Smart City Tech",
       desc: "Optimizing multi-modal urban mobility for a greener Delhi."
     },
     {
@@ -227,7 +227,7 @@ const SmartCitySlideshow = () => {
       desc: "AI-driven civic resolution systems for faster response times."
     },
     {
-      url: "https://images.unsplash.com/photo-1597041066672-442d61028f44?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
       title: "Urban Resilience",
       desc: "Predictive maintenance and resource optimization for city services."
     }
@@ -322,17 +322,17 @@ const ComplaintSlideshow = () => {
       desc: "AI detection of potholes and road surface damage for rapid repair."
     },
     {
-      url: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=80",
       title: "Waste Management",
       desc: "Identifying overflowing bins and illegal dumping in real-time."
     },
     {
-      url: "https://images.unsplash.com/photo-1516646255117-f9f933680173?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80",
       title: "Public Infrastructure",
       desc: "Monitoring structural health and reporting public asset damage."
     },
     {
-      url: "https://images.unsplash.com/photo-1581094288338-2314dddb7ec3?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
       title: "Utility Services",
       desc: "Reporting water leaks and electrical hazards for immediate attention."
     }
@@ -422,7 +422,7 @@ const ComplaintSlideshow = () => {
 const TransportSlideshow = () => {
   const images = [
     {
-      url: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1594142461625-0749032608d4?auto=format&fit=crop&w=1200&q=80",
       title: "Delhi Metro Network",
       desc: "The backbone of Delhi's urban mobility, serving millions daily."
     },
@@ -432,12 +432,12 @@ const TransportSlideshow = () => {
       desc: "Optimized bus routes with real-time tracking and occupancy data."
     },
     {
-      url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-      title: "Last Mile Connectivity",
+      url: "https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?auto=format&fit=crop&w=1200&q=80",
+      title: "Smart Parking",
       desc: "Integrating e-rickshaws and cycles for seamless end-to-end travel."
     },
     {
-      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=80",
       title: "Traffic Intelligence",
       desc: "AI-powered traffic management to reduce congestion and emissions."
     }
@@ -527,7 +527,7 @@ const TransportSlideshow = () => {
 const AgricultureSlideshow = () => {
   const images = [
     {
-      url: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
       title: "Precision Farming",
       desc: "AI-driven crop health monitoring and yield prediction for farmers."
     },
@@ -537,12 +537,12 @@ const AgricultureSlideshow = () => {
       desc: "Optimizing water usage through real-time soil moisture sensing."
     },
     {
-      url: "https://images.unsplash.com/photo-1488459711615-de64ef5996f6?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1595273670150-db0d3bf3926a?auto=format&fit=crop&w=1200&q=80",
       title: "Market Intelligence",
       desc: "Real-time mandi prices and demand forecasting for better profits."
     },
     {
-      url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+      url: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80",
       title: "Rural Connectivity",
       desc: "Bridging the digital divide with localized services and advisory."
     }
@@ -1085,7 +1085,7 @@ export default function App() {
     email: "sirohiadhyaan@gmail.com",
     role: "Verified Citizen",
     joinDate: "Jan 2024",
-    avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Adhyaan",
+    avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Adhyaan",
     bio: "Urban planning enthusiast and active contributor to Delhi's smart city initiatives. Focused on improving local waste management and road infrastructure."
   });
   const [complaints, setComplaints] = useState<Complaint[]>([]);
