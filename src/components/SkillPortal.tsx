@@ -370,7 +370,7 @@ export const SkillPortal = () => {
       {!selectedCategory && !searchQuery && (
         <div className="relative h-80 md:h-[450px] rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-100 group">
           <img 
-            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80" 
+            src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80" 
             alt="Featured"
             referrerPolicy="no-referrer"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"

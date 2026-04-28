@@ -210,97 +210,34 @@ const LiveQueueTracker = () => {
 };
 
 const SmartCitySlideshow = () => {
-  const images = [
-    {
-      url: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1200&q=80",
-      title: "Digital Infrastructure",
-      desc: "Real-time monitoring of city assets and infrastructure health."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
-      title: "Smart City Tech",
-      desc: "Optimizing multi-modal urban mobility for a greener Delhi."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
-      title: "Smart Governance",
-      desc: "AI-driven civic resolution systems for faster response times."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
-      title: "Urban Resilience",
-      desc: "Predictive maintenance and resource optimization for city services."
-    }
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const image = {
+    url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1200&q=80",
+    title: "Digital Infrastructure",
+    desc: "Real-time monitoring of city assets and infrastructure health."
+  };
 
   return (
     <div className="relative w-full h-80 overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-200 group">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: "circOut" }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={images[index].url} 
-            alt={images[index].title}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 space-y-2">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="label-caps !text-blue-400"
-            >
-              Smart City Vision
-            </motion.div>
-            <motion.h3
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-3xl font-black text-white tracking-tighter"
-            >
-              {images[index].title}
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-slate-300 text-sm font-medium max-w-md"
-            >
-              {images[index].desc}
-            </motion.p>
+      <div className="absolute inset-0">
+        <img 
+          src={image.url} 
+          alt={image.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+        
+        <div className="absolute bottom-8 left-8 right-8 space-y-2">
+          <div className="label-caps !text-blue-400">
+            Smart City Vision
           </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Progress Indicators */}
-      <div className="absolute top-6 right-8 flex gap-2">
-        {images.map((_, i) => (
-          <div 
-            key={i}
-            className={cn(
-              "h-1 rounded-full transition-all duration-500",
-              i === index ? "w-8 bg-blue-500" : "w-2 bg-white/30"
-            )}
-          />
-        ))}
+          <h3 className="text-3xl font-black text-white tracking-tighter">
+            {image.title}
+          </h3>
+          <p className="text-slate-300 text-sm font-medium max-w-md">
+            {image.desc}
+          </p>
+        </div>
       </div>
 
       {/* Decorative Elements */}
@@ -315,97 +252,34 @@ const SmartCitySlideshow = () => {
 };
 
 const ComplaintSlideshow = () => {
-  const images = [
-    {
-      url: "https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=1200&q=80",
-      title: "Road Maintenance",
-      desc: "AI detection of potholes and road surface damage for rapid repair."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=80",
-      title: "Waste Management",
-      desc: "Identifying overflowing bins and illegal dumping in real-time."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80",
-      title: "Public Infrastructure",
-      desc: "Monitoring structural health and reporting public asset damage."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
-      title: "Utility Services",
-      desc: "Reporting water leaks and electrical hazards for immediate attention."
-    }
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const image = {
+    url: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=1200&q=80",
+    title: "Pothole Detection",
+    desc: "AI-driven identification of road surface damage for rapid repair."
+  };
 
   return (
     <div className="relative w-full h-80 overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-200 group">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: "circOut" }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={images[index].url} 
-            alt={images[index].title}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 space-y-2">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="label-caps !text-blue-400"
-            >
-              Civic Resolution Vision
-            </motion.div>
-            <motion.h3
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-3xl font-black text-white tracking-tighter"
-            >
-              {images[index].title}
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-slate-300 text-sm font-medium max-w-md"
-            >
-              {images[index].desc}
-            </motion.p>
+      <div className="absolute inset-0">
+        <img 
+          src={image.url} 
+          alt={image.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+        
+        <div className="absolute bottom-8 left-8 right-8 space-y-2">
+          <div className="label-caps !text-blue-400">
+            Civic Resolution Vision
           </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Progress Indicators */}
-      <div className="absolute top-6 right-8 flex gap-2">
-        {images.map((_, i) => (
-          <div 
-            key={i}
-            className={cn(
-              "h-1 rounded-full transition-all duration-500",
-              i === index ? "w-8 bg-blue-500" : "w-2 bg-white/30"
-            )}
-          />
-        ))}
+          <h3 className="text-3xl font-black text-white tracking-tighter">
+            {image.title}
+          </h3>
+          <p className="text-slate-300 text-sm font-medium max-w-md">
+            {image.desc}
+          </p>
+        </div>
       </div>
 
       {/* Decorative Elements */}
@@ -420,97 +294,34 @@ const ComplaintSlideshow = () => {
 };
 
 const TransportSlideshow = () => {
-  const images = [
-    {
-      url: "https://images.unsplash.com/photo-1594142461625-0749032608d4?auto=format&fit=crop&w=1200&q=80",
-      title: "Delhi Metro Network",
-      desc: "The backbone of Delhi's urban mobility, serving millions daily."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
-      title: "Smart Bus Transit",
-      desc: "Optimized bus routes with real-time tracking and occupancy data."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?auto=format&fit=crop&w=1200&q=80",
-      title: "Smart Parking",
-      desc: "Integrating e-rickshaws and cycles for seamless end-to-end travel."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=80",
-      title: "Traffic Intelligence",
-      desc: "AI-powered traffic management to reduce congestion and emissions."
-    }
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const image = {
+    url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80",
+    title: "Smart Transit Network",
+    desc: "Efficient and reliable multi-modal urban mobility for all citizens."
+  };
 
   return (
     <div className="relative w-full h-80 overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-200 group">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: "circOut" }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={images[index].url} 
-            alt={images[index].title}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 space-y-2">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="label-caps !text-blue-400"
-            >
-              Smart Mobility Vision
-            </motion.div>
-            <motion.h3
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-3xl font-black text-white tracking-tighter"
-            >
-              {images[index].title}
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-slate-300 text-sm font-medium max-w-md"
-            >
-              {images[index].desc}
-            </motion.p>
+      <div className="absolute inset-0">
+        <img 
+          src={image.url} 
+          alt={image.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+        
+        <div className="absolute bottom-8 left-8 right-8 space-y-2">
+          <div className="label-caps !text-blue-400">
+            Smart Mobility Vision
           </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Progress Indicators */}
-      <div className="absolute top-6 right-8 flex gap-2">
-        {images.map((_, i) => (
-          <div 
-            key={i}
-            className={cn(
-              "h-1 rounded-full transition-all duration-500",
-              i === index ? "w-8 bg-blue-500" : "w-2 bg-white/30"
-            )}
-          />
-        ))}
+          <h3 className="text-3xl font-black text-white tracking-tighter">
+            {image.title}
+          </h3>
+          <p className="text-slate-300 text-sm font-medium max-w-md">
+            {image.desc}
+          </p>
+        </div>
       </div>
 
       {/* Decorative Elements */}
@@ -525,97 +336,34 @@ const TransportSlideshow = () => {
 };
 
 const AgricultureSlideshow = () => {
-  const images = [
-    {
-      url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
-      title: "Precision Farming",
-      desc: "AI-driven crop health monitoring and yield prediction for farmers."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&w=1200&q=80",
-      title: "Smart Irrigation",
-      desc: "Optimizing water usage through real-time soil moisture sensing."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1595273670150-db0d3bf3926a?auto=format&fit=crop&w=1200&q=80",
-      title: "Market Intelligence",
-      desc: "Real-time mandi prices and demand forecasting for better profits."
-    },
-    {
-      url: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80",
-      title: "Rural Connectivity",
-      desc: "Bridging the digital divide with localized services and advisory."
-    }
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const image = {
+    url: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
+    title: "Agricultural Intelligence",
+    desc: "Traditional farming wisdom meets AI for sustainable crop management."
+  };
 
   return (
     <div className="relative w-full h-80 overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-200 group">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: "circOut" }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={images[index].url} 
-            alt={images[index].title}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 space-y-2">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="label-caps !text-emerald-400"
-            >
-              Rural Empowerment Vision
-            </motion.div>
-            <motion.h3
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-3xl font-black text-white tracking-tighter"
-            >
-              {images[index].title}
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="text-slate-300 text-sm font-medium max-w-md"
-            >
-              {images[index].desc}
-            </motion.p>
+      <div className="absolute inset-0">
+        <img 
+          src={image.url} 
+          alt={image.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+        
+        <div className="absolute bottom-8 left-8 right-8 space-y-2">
+          <div className="label-caps !text-emerald-400">
+            Rural Empowerment Vision
           </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Progress Indicators */}
-      <div className="absolute top-6 right-8 flex gap-2">
-        {images.map((_, i) => (
-          <div 
-            key={i}
-            className={cn(
-              "h-1 rounded-full transition-all duration-500",
-              i === index ? "w-8 bg-emerald-500" : "w-2 bg-white/30"
-            )}
-          />
-        ))}
+          <h3 className="text-3xl font-black text-white tracking-tighter">
+            {image.title}
+          </h3>
+          <p className="text-slate-300 text-sm font-medium max-w-md">
+            {image.desc}
+          </p>
+        </div>
       </div>
 
       {/* Decorative Elements */}
@@ -1132,17 +880,31 @@ export default function App() {
     document.body.removeChild(element);
   };
 
-  const generateAgriAdvice = async () => {
+  const getGeminiClient = async () => {
+    let apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    const hasKey = apiKey || ((window as any).aistudio && await (window as any).aistudio.hasSelectedApiKey());
+    
+    if (!hasKey) {
+      if ((window as any).aistudio) {
+        await (window as any).aistudio.openSelectKey();
+        // After opening the dialog, we might need to wait or the user might need to retry
+        // But for now, we'll try to get the key again
+        apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+      }
+    }
+
+    if (!apiKey) {
+      throw new Error("API key is required. Please select an API key from the settings menu.");
+    }
+
+    return new GoogleGenAI({ apiKey });
+  };
+
+  const generateAgriAdvice = async (retryCount = 0) => {
     if (!agriQuery) return;
     setIsGeneratingAdvice(true);
     try {
-      // @ts-ignore
-      const apiKey = (typeof process !== 'undefined' && process.env) ? (process.env.GEMINI_API_KEY || process.env.API_KEY) : '';
-      if (!apiKey) {
-        throw new Error("GEMINI_API_KEY is not configured");
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = await getGeminiClient();
       const prompt = `You are an expert Agriculture Advisor for farmers in the Delhi/NCR region. 
       The farmer is asking about ${selectedCrop || 'their crops'}: "${agriQuery}".
       Provide a concise, practical, and scientifically sound advice. 
@@ -1158,11 +920,23 @@ export default function App() {
       });
 
       setAgriAdvice(response.text || "No advice received. Please try again.");
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to generate advice", err);
-      setAgriAdvice("Failed to connect to AI service. Please check your connection.");
+      
+      // Handle 503 Authentication backend unavailable with a retry
+      if (err?.message?.includes('503') && retryCount < 2) {
+        console.log(`Retrying generateAgriAdvice (attempt ${retryCount + 1})...`);
+        setTimeout(() => generateAgriAdvice(retryCount + 1), 1000);
+        return;
+      }
+
+      setAgriAdvice(err?.message?.includes('API key') 
+        ? "Please select a valid API key from the settings menu." 
+        : "Failed to connect to AI service. Please try again in a moment.");
     } finally {
-      setIsGeneratingAdvice(false);
+      if (retryCount === 0 || !agriAdvice) {
+        setIsGeneratingAdvice(false);
+      }
     }
   };
 
@@ -1290,36 +1064,12 @@ export default function App() {
     );
   };
 
-  const calculateRoute = async () => {
+  const calculateRoute = async (retryCount = 0) => {
     setSelectedRouteIndex(null);
-    // Check for API key selection if missing in env
-    let apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-    const hasKey = apiKey || ((window as any).aistudio && await (window as any).aistudio.hasSelectedApiKey());
-    
-    if (!hasKey) {
-      console.error("GEMINI_API_KEY is missing");
-      if ((window as any).aistudio) {
-        await (window as any).aistudio.openSelectKey();
-      }
-      
-      // Fallback immediately if key is missing
-      setRouteData(prev => ({ ...prev, isCalculating: false, results: [
-        { mode: 'Metro', time: '45 min', cost: '₹40', crowd: 'High', co2: '0.2 kg', efficiency: 92, details: 'Blue Line to Rajiv Chowk', best: true },
-        { mode: 'Taxi', time: '65 min', cost: '₹450', crowd: 'Low', co2: '4.5 kg', efficiency: 65, details: 'Via NH-48', best: false },
-        { mode: 'Bus', time: '90 min', cost: '₹25', crowd: 'Medium', co2: '1.2 kg', efficiency: 78, details: 'Route 727', best: false }
-      ]}));
-      return;
-    }
-
     setRouteData(prev => ({ ...prev, isCalculating: true }));
+    
     try {
-      // Re-read key to ensure we have the one from the dialog if it was just selected
-      const currentKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-      if (!currentKey) {
-        throw new Error("API key not found after selection");
-      }
-      
-      const ai = new GoogleGenAI({ apiKey: currentKey });
+      const ai = await getGeminiClient();
       const prompt = `Provide 3 real-world transport route options between ${routeData.origin} and ${routeData.destination} in Delhi. 
       Include Metro, Bus, and Taxi/Auto options.
       Respond ONLY with a JSON array of objects:
@@ -1364,13 +1114,15 @@ export default function App() {
       const jsonMatch = text.match(/\[[\s\S]*\]/);
       const results = JSON.parse(jsonMatch ? jsonMatch[0] : (text.includes('[') ? text : "[]"));
       setRouteData(prev => ({ ...prev, results, isCalculating: false }));
-    } catch (err) {
+    } catch (err: any) {
       console.error("Route calculation failed", err);
-      // If it's an API key error, prompt again
-      if (err instanceof Error && err.message.includes("API key") && (window as any).aistudio) {
-        await (window as any).aistudio.openSelectKey();
-      }
       
+      // Handle 503 with retry
+      if (err?.message?.includes('503') && retryCount < 2) {
+        setTimeout(() => calculateRoute(retryCount + 1), 1000);
+        return;
+      }
+
       // Fallback to simulation if AI fails
       setRouteData(prev => ({ ...prev, isCalculating: false, results: [
         { mode: 'Metro', time: '45 min', cost: '₹40', crowd: 'High', co2: '0.2 kg', efficiency: 92, details: 'Blue Line to Rajiv Chowk', best: true },
@@ -1448,20 +1200,14 @@ export default function App() {
     reader.readAsDataURL(file);
   };
 
-  const analyzeImage = async () => {
+  const analyzeImage = async (retryCount = 0) => {
     if (!uploadedImage) return;
     setIsAnalyzing(true);
     try {
       const base64 = uploadedImage.split(',')[1];
       const mimeType = uploadedImage.split(';')[0].split(':')[1];
       
-      // @ts-ignore
-      const apiKey = (typeof process !== 'undefined' && process.env) ? (process.env.GEMINI_API_KEY || process.env.API_KEY) : '';
-      if (!apiKey) {
-        throw new Error("GEMINI_API_KEY is not configured");
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = await getGeminiClient();
       const prompt = `Analyze this city complaint image. Focus on identifying issues like garbage, poor infrastructure, or potholes.
       Respond ONLY with a JSON object (no markdown, no extra text): 
       {
@@ -1498,10 +1244,20 @@ export default function App() {
         category: data.category || prev.category,
         description: data.description || prev.description
       }));
-    } catch (err) {
-      console.error("Analysis failed", err);
+    } catch (err: any) {
+      console.error("Image analysis failed", err);
+      
+      // Handle 503 with retry
+      if (err?.message?.includes('503') && retryCount < 2) {
+        setTimeout(() => analyzeImage(retryCount + 1), 1000);
+        return;
+      }
+
+      setAiResult({ error: "Failed to analyze image. Please try again." });
     } finally {
-      setIsAnalyzing(false);
+      if (retryCount === 0 || !aiResult) {
+        setIsAnalyzing(false);
+      }
     }
   };
 

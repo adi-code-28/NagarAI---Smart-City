@@ -51,14 +51,16 @@ async function startServer() {
       title: 'Overflowing garbage near market', 
       category: 'garbage', 
       location: 'Lajpat Nagar', 
-      status: 'open', 
+      status: 'resolved', 
       priority: 'high', 
       score: 71, 
       time: '5h ago',
       department: 'MCD Sanitation Dept',
       deptEmail: 'mcd.sanitation@delhi.gov.in',
       history: [
-        { status: 'open', action: 'Complaint registered via NagarAI', time: '5h ago', timestamp: Date.now() - 18000000 }
+        { status: 'open', action: 'Complaint registered via NagarAI', time: '5h ago', timestamp: Date.now() - 18000000 },
+        { status: 'in_progress', action: 'MCD cleanup team dispatched', time: '3h ago', timestamp: Date.now() - 10800000 },
+        { status: 'resolved', action: 'Garbage cleared and site sanitized', time: '1h ago', timestamp: Date.now() - 3600000 }
       ]
     },
     { 
@@ -78,6 +80,21 @@ async function startServer() {
         { status: 'resolved', action: 'Bulb replaced and tested', time: '18h ago', timestamp: Date.now() - 64800000 }
       ]
     },
+    { 
+      id: '4', 
+      title: 'Illegal dumping in park', 
+      category: 'garbage', 
+      location: 'Dwarka Sector 12', 
+      status: 'open', 
+      priority: 'high', 
+      score: 78, 
+      time: '10m ago',
+      department: 'MCD Sanitation Dept',
+      deptEmail: 'mcd.sanitation@delhi.gov.in',
+      history: [
+        { status: 'open', action: 'Complaint registered via NagarAI', time: '10m ago', timestamp: Date.now() - 600000 }
+      ]
+    }
   ];
 
   let events = [
@@ -90,7 +107,7 @@ async function startServer() {
       location: 'Vigyan Bhawan, Delhi',
       description: 'Live discussion on the future of transport in Delhi with urban planners and AI experts.',
       organizer: 'Ministry of Urban Development',
-      image: 'https://images.unsplash.com/photo-1594142461625-0749032608d4?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1540575861501-7ad05823c951?auto=format&fit=crop&w=800&q=80',
       tags: ['Live', 'Transport', 'AI'],
       isFree: true,
       isLive: true
@@ -400,7 +417,7 @@ async function startServer() {
   // Learning Portal Data
   const categories = [
     { id: 'jee', title: 'JEE Preparation', description: 'Master Physics, Chemistry, and Maths for JEE Main & Advanced.', thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80', icon: 'GraduationCap' },
-    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=800&q=80', icon: 'Activity' },
+    { id: 'neet', title: 'NEET Preparation', description: 'Comprehensive Biology, Physics, and Chemistry for Medical aspirants.', thumbnail: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80', icon: 'Activity' },
     { id: 'class10', title: 'Class 10 Boards', description: 'Complete syllabus coverage for Class 10 Board exams.', thumbnail: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80', icon: 'BookOpen' },
     { id: 'class12', title: 'Class 12 Boards', description: 'In-depth preparation for Class 12 Board exams and competitive basics.', thumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80', icon: 'Book' },
     { id: 'skills', title: 'Skill Development', description: 'Learn Coding, AI, Communication, and more for the future.', thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80', icon: 'Zap' },
