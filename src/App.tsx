@@ -762,10 +762,9 @@ const EventsSection = ({ events }: { events: CityEvent[] }) => {
             >
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={event.image} 
+                  src={event.image || 'https://images.unsplash.com/photo-1540575861501-7ad05823c951?auto=format&fit=crop&w=800&q=80'} 
                   alt={event.title} 
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
                   <span className={cn(
@@ -1166,9 +1165,12 @@ export default function App() {
     fetchAgriData();
     fetchEvents();
     
-    // Refresh notifications every 30 seconds
+    // Refresh data every 30 seconds to keep it "live"
     const interval = setInterval(() => {
       fetchNotifications();
+      fetchComplaints();
+      fetchEvents();
+      fetchAgriData();
     }, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -1480,22 +1482,7 @@ export default function App() {
                 ))}
               </section>
 
-              {/* Live City Services Section */}
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display font-black text-slate-900 flex items-center gap-3 uppercase tracking-tight">
-                    <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-                      <Activity size={20} />
-                    </div>
-                    Live City Services
-                  </h3>
-                  <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                    Real-time Status
-                  </div>
-                </div>
-                <LiveQueueTracker />
-              </section>
+
             </motion.div>
           )}
 
