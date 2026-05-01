@@ -4124,13 +4124,19 @@ grep "pass"  # Search for pattern</pre>
   app.get("/api/agri-data", (req, res) => {
     try {
       // Simulate live agriculture data for Delhi/NCR region
+      // Add slight random variations for "live" feel
+      const randomVariation = (base: number) => {
+        const factor = 1 + (Math.random() * 0.04 - 0.02); // +/- 2%
+        return Math.floor(base * factor);
+      };
+
       const marketPrices = [
-        { crop: 'Wheat', price: '₹2,125', unit: 'Quintal', trend: 'up', change: '+2.5%' },
-        { crop: 'Paddy (Basmati)', price: '₹3,850', unit: 'Quintal', trend: 'down', change: '-1.2%' },
-        { crop: 'Mustard', price: '₹5,450', unit: 'Quintal', trend: 'stable', change: '0%' },
-        { crop: 'Potato', price: '₹1,200', unit: 'Quintal', trend: 'up', change: '+5.8%' },
-        { crop: 'Onion', price: '₹1,850', unit: 'Quintal', trend: 'up', change: '+12.4%' },
-        { crop: 'Tomato', price: '₹2,400', unit: 'Quintal', trend: 'down', change: '-8.5%' },
+        { crop: 'Wheat', price: `₹${randomVariation(2125).toLocaleString('en-IN')}`, unit: 'Quintal', trend: Math.random() > 0.5 ? 'up' : 'stable', change: '+2.5%' },
+        { crop: 'Paddy (Basmati)', price: `₹${randomVariation(3850).toLocaleString('en-IN')}`, unit: 'Quintal', trend: 'down', change: '-1.2%' },
+        { crop: 'Mustard', price: `₹${randomVariation(5450).toLocaleString('en-IN')}`, unit: 'Quintal', trend: 'stable', change: '0%' },
+        { crop: 'Potato', price: `₹${randomVariation(1200).toLocaleString('en-IN')}`, unit: 'Quintal', trend: 'up', change: '+5.8%' },
+        { crop: 'Onion', price: `₹${randomVariation(1850).toLocaleString('en-IN')}`, unit: 'Quintal', trend: 'up', change: '+12.4%' },
+        { crop: 'Tomato', price: `₹${randomVariation(2400).toLocaleString('en-IN')}`, unit: 'Quintal', trend: 'down', change: '-8.5%' },
       ];
 
       const weatherAlerts = [

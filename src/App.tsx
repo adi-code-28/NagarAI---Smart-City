@@ -222,7 +222,6 @@ const SmartCitySlideshow = () => {
         <img 
           src={image.url} 
           alt={image.title}
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
@@ -264,7 +263,6 @@ const ComplaintSlideshow = () => {
         <img 
           src={image.url} 
           alt={image.title}
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
@@ -306,7 +304,6 @@ const TransportSlideshow = () => {
         <img 
           src={image.url} 
           alt={image.title}
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
@@ -348,7 +345,6 @@ const AgricultureSlideshow = () => {
         <img 
           src={image.url} 
           alt={image.title}
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
@@ -469,7 +465,7 @@ const UserDashboard = ({ complaints, notifications, user, onUpdateUser }: { comp
                               : "bg-slate-50 hover:bg-slate-100 border border-slate-200"
                           )}
                         >
-                          <img src={url} alt={seed} className="w-full h-full rounded-xl bg-white" referrerPolicy="no-referrer" />
+                          <img src={url} alt={seed} className="w-full h-full rounded-xl bg-white" />
                           {isSelected && (
                             <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-lg">
                               <CheckCircle2 size={12} className="text-blue-600" />
@@ -508,7 +504,7 @@ const UserDashboard = ({ complaints, notifications, user, onUpdateUser }: { comp
         <div className="relative flex flex-col md:flex-row gap-12 items-center md:items-start">
           <div className="relative">
             <div className="w-40 h-40 rounded-[2.5rem] bg-gradient-to-br from-blue-100 to-indigo-100 p-1 shadow-2xl group">
-              <img src={user.avatar} alt={user.name} className="w-full h-full rounded-[2.2rem] bg-white object-cover transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+              <img src={user.avatar} alt={user.name} className="w-full h-full rounded-[2.2rem] bg-white object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-emerald-500 rounded-2xl border-4 border-white flex items-center justify-center shadow-xl">
               <ShieldCheck size={18} className="text-white" />
@@ -1383,7 +1379,7 @@ export default function App() {
                   activeTab === 'profile' ? "border-blue-500 ring-4 ring-blue-50" : "border-slate-200 hover:bg-slate-50"
                 )}
               >
-                <img src={user.avatar} alt="Profile" className="w-full h-full bg-blue-50" referrerPolicy="no-referrer" />
+                <img src={user.avatar} alt="Profile" className="w-full h-full bg-blue-50" />
               </button>
             </div>
           </div>
@@ -1519,7 +1515,7 @@ export default function App() {
                   
                   {uploadedImage ? (
                     <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl">
-                      <img src={uploadedImage} alt="Uploaded" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      <img src={uploadedImage} alt="Uploaded" className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center backdrop-blur-[2px]">
                         <span className="text-white text-xs font-black uppercase tracking-widest bg-black/50 px-6 py-2 rounded-full backdrop-blur-md border border-white/20">Change Image</span>
                       </div>
